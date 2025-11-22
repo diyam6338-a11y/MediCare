@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MediCare</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>
+                <span>MediCare</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="services-page.html" class="nav-link">Services</a>
+                <a href="login-page.html" class="nav-link active">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Section -->
+    <section class="login-section" style="min-height: 100vh; display: flex; align-items: center; padding: 2rem 1.5rem; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+        <div class="container" style="max-width: 900px;">
+            <div style="background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
+                
+                <!-- Left Side - Info -->
+                <div style="background: linear-gradient(135deg, #1a3a4a 0%, #2d8a99 100%); color: white; padding: 3rem 2rem; display: flex; flex-direction: column; justify-content: center;">
+                    <h1 style="margin-bottom: 1.5rem; font-size: 2rem;">Welcome to MediCare</h1>
+                    <p style="margin-bottom: 1rem; line-height: 1.6;">Professional Healthcare Management System with expert specialists ready to serve you.</p>
+                    <ul style="list-style: none; padding: 0; margin: 2rem 0;">
+                        <li style="margin-bottom: 1rem;">✓ 150+ Expert Doctors</li>
+                        <li style="margin-bottom: 1rem;">✓ 500+ Beds</li>
+                        <li style="margin-bottom: 1rem;">✓ 24/7 Emergency Care</li>
+                        <li>✓ Online Appointments</li>
+                    </ul>
+                </div>
+
+                <!-- Right Side - Login Forms -->
+                <div style="padding: 3rem 2rem;">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <h2 style="color: #1a3a4a; margin-bottom: 0.5rem;">Select Your Role</h2>
+                        <p style="color: #666; font-size: 0.9rem;">Choose your login type to continue</p>
+                    </div>
+
+                    <!-- Role Selector -->
+                    <div class="role-selector" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                        <button class="role-btn active" data-role="patient" style="padding: 1rem; border: 2px solid #2d8a99; background: #e8f4f8; color: #1a3a4a; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s;">
+                            👤 Patient
+                        </button>
+                        <button class="role-btn" data-role="doctor" style="padding: 1rem; border: 2px solid #ddd; background: white; color: #1a3a4a; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s;">
+                            👨‍⚕️ Doctor
+                        </button>
+                        <button class="role-btn" data-role="nurse" style="padding: 1rem; border: 2px solid #ddd; background: white; color: #1a3a4a; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s;">
+                            👩‍⚕️ Nurse
+                        </button>
+                        <button class="role-btn" data-role="staff" style="padding: 1rem; border: 2px solid #ddd; background: white; color: #1a3a4a; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s;">
+                            👷 Staff
+                        </button>
+                    </div>
+
+                    <!-- Demo Credentials Display -->
+                    <div id="credentials-display" style="background: #f0f8ff; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid #2d8a99;">
+                        <p style="margin: 0 0 1rem 0; color: #1a3a4a; font-weight: 600; font-size: 0.9rem;">📋 DEMO CREDENTIALS:</p>
+                        <div id="credentials-content"></div>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form id="login-form" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; color: #1a3a4a; font-weight: 600; font-size: 0.9rem;">
+                                Email / Username
+                            </label>
+                            <input type="text" id="username" placeholder="Enter your email" style="width: 100%; padding: 0.8rem; border: 2px solid #ddd; border-radius: 6px; font-size: 1rem; box-sizing: border-box; transition: border-color 0.3s;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; color: #1a3a4a; font-weight: 600; font-size: 0.9rem;">
+                                Password
+                            </label>
+                            <input type="password" id="password" placeholder="Enter your password" style="width: 100%; padding: 0.8rem; border: 2px solid #ddd; border-radius: 6px; font-size: 1rem; box-sizing: border-box; transition: border-color 0.3s;" required>
+                        </div>
+                        <button type="submit" class="btn btn--primary" style="padding: 0.8rem; text-decoration: none; cursor: pointer; margin-top: 1rem;">
+                            Login
+                        </button>
+                    </form>
+
+                    <p style="text-align: center; color: #666; margin-top: 1.5rem; font-size: 0.9rem;">
+                        Don't have an account? <a href="#" style="color: #2d8a99; font-weight: 600; text-decoration: none;">Sign Up</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Responsive CSS for Mobile -->
+            <style>
+                @media (max-width: 768px) {
+                    [style*="grid-template-columns: 1fr 1fr"] {
+                        grid-template-columns: 1fr !important;
+                    }
+                    .role-selector {
+                        grid-template-columns: 1fr 1fr !important;
+                    }
+                }
+            </style>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: #1a3a4a; color: white; padding: 3rem 1.5rem; text-align: center;">
+        <p>&copy; 2025 MediCare Healthcare Management System. All rights reserved.</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">Dedicated to providing excellence in healthcare.</p>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        // Demo credentials for different roles
+        const credentials = {
+            patient: {
+                username: 'patient@hospital.com',
+                password: 'patient123'
+            },
+            doctor: {
+                username: 'doctor@hospital.com',
+                password: 'doctor123'
+            },
+            nurse: {
+                username: 'nurse@hospital.com',
+                password: 'nurse123'
+            },
+            staff: {
+                username: 'staff@hospital.com',
+                password: 'staff123'
+            }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            displayCredentials('patient');
+            setupRoleButtons();
+            setupLoginForm();
+        });
+
+        function displayCredentials(role) {
+            const creds = credentials[role];
+            const content = document.getElementById('credentials-content');
+            content.innerHTML = `
+                <div style="margin-bottom: 0.8rem;">
+                    <small style="color: #666;">Email:</small>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <code style="background: white; padding: 0.5rem; border-radius: 4px; flex: 1; color: #2d8a99; font-weight: 600; font-size: 0.85rem; word-break: break-all;">${creds.username}</code>
+                        <button type="button" class="copy-btn" data-value="${creds.username}" style="padding: 0.4rem 0.8rem; background: #2d8a99; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Copy</button>
+                    </div>
+                </div>
+                <div>
+                    <small style="color: #666;">Password:</small>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <code style="background: white; padding: 0.5rem; border-radius: 4px; flex: 1; color: #2d8a99; font-weight: 600; font-size: 0.85rem; letter-spacing: 1px;">${creds.password}</code>
+                        <button type="button" class="copy-btn" data-value="${creds.password}" style="padding: 0.4rem 0.8rem; background: #2d8a99; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Copy</button>
+                    </div>
+                </div>
+            `;
+
+            // Setup copy buttons
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    navigator.clipboard.writeText(this.getAttribute('data-value'));
+                    alert('Copied to clipboard!');
+                });
+            });
+
+            // Auto-fill form
+            document.getElementById('username').value = creds.username;
+            document.getElementById('password').value = creds.password;
+        }
+
+        function setupRoleButtons() {
+            document.querySelectorAll('.role-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.role-btn').forEach(b => {
+                        b.style.border = '2px solid #ddd';
+                        b.style.background = 'white';
+                    });
+                    this.style.border = '2px solid #2d8a99';
+                    this.style.background = '#e8f4f8';
+                    displayCredentials(this.getAttribute('data-role'));
+                });
+            });
+        }
+
+        function setupLoginForm() {
+            document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                alert(`Login successful!\nUsername: ${username}\n\nNote: This is a demo interface. In a production system, credentials would be validated against a real database.`);
+                
+                // In real system, you would send to backend
+                // For now, just show success message
+            });
+        }
+    </script>
+</body>
+</html>

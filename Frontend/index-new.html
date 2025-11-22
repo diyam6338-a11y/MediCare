@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare - Healthcare Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>
+                <span>MediCare</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="login.html" class="nav-link">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Home) -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Advanced Healthcare Management</h1>
+            <p class="hero-subtitle">Streamlined patient care, efficient operations, and better outcomes</p>
+            <button class="btn btn--primary btn--lg" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">Learn More</button>
+        </div>
+    </section>
+
+    <!-- About Section (Merged with Home) -->
+    <section id="about" class="hospital-info-section">
+        <div class="container">
+            <!-- Hospital Header -->
+            <div class="hospital-header">
+                <h2>Welcome to Xcelerate Medical Center</h2>
+                <p>Leading Healthcare Excellence Since 2015</p>
+            </div>
+
+            <!-- Statistics Section -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
+                <div style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 2rem; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: #2d8a99;">15+</div>
+                    <p style="color: #1a3a4a; margin-top: 0.5rem;">Years of Excellence</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 2rem; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: #2d8a99;">150+</div>
+                    <p style="color: #1a3a4a; margin-top: 0.5rem;">Specialist Doctors</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 2rem; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: #2d8a99;">500+</div>
+                    <p style="color: #1a3a4a; margin-top: 0.5rem;">Bed Capacity</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 2rem; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: #2d8a99;">6</div>
+                    <p style="color: #1a3a4a; margin-top: 0.5rem;">Departments</p>
+                </div>
+            </div>
+
+            <!-- Departments Section -->
+            <div style="margin-bottom: 4rem;">
+                <h3 style="text-align: center; margin-bottom: 2rem; color: #1a3a4a; font-size: 1.8rem;">Our Departments</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">❤️</div>
+                        <h3>Cardiology</h3>
+                        <p>Advanced cardiac care and treatment services</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🧠</div>
+                        <h3>Neurology</h3>
+                        <p>Brain and nervous system specialist care</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">👶</div>
+                        <h3>Pediatrics</h3>
+                        <p>Specialized child healthcare services</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🦴</div>
+                        <h3>Orthopedics</h3>
+                        <p>Bone and joint treatment expertise</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🚨</div>
+                        <h3>Emergency</h3>
+                        <p>24/7 emergency medical services</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">⚕️</div>
+                        <h3>General Medicine</h3>
+                        <p>Comprehensive general healthcare</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expert Doctors Section (Properly Structured) -->
+            <div style="margin-bottom: 4rem;">
+                <h3 style="text-align: center; margin-bottom: 3rem; color: #1a3a4a; font-size: 1.8rem;">Our Expert Doctors</h3>
+                <div class="doctors-grid">
+                    <!-- Doctor 1: Cardiology -->
+                    <div class="doctor-card">
+                        <div style="text-align: center; padding-bottom: 1rem; border-bottom: 2px solid #2d8a99;">
+                            <div class="doctor-avatar">👨‍⚕️</div>
+                            <h4 style="color: #1a3a4a; margin: 1rem 0 0.5rem 0;">Dr. Sarah Williams</h4>
+                            <p style="color: #2d8a99; font-weight: 600; margin: 0;">Cardiology Specialist</p>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <div style="margin-bottom: 1rem;">
+                                <p style="color: #666; font-size: 0.9rem; line-height: 1.6;">Expert in advanced cardiac care and interventional cardiology with extensive expertise in treating complex heart conditions.</p>
+                            </div>
+                            <div style="background: #f9f9f9; padding: 1rem; border-radius: 8px; border-left: 4px solid #2d8a99; margin-bottom: 1rem;">
+                                <p style="color: #1a3a4a; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">📅 Available Slots:</p>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                                    <span style="color: #666; font-size: 0.85rem;">10:00 AM</span>
+                                    <span style="color: #666; font-size: 0.85rem;">11:30 AM</span>
+                                    <span style="color: #666; font-size: 0.85rem;">2:00 PM</span>
+                                    <span style="color: #666; font-size: 0.85rem;">4:00 PM</span>
+                                </div>
+                            </div>
+                            <div style="background: #e8f4f8; padding: 1rem; border-radius: 8px;">
+                                <p style="color: #2d8a99; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">✓ Success Rate: 98.5%</p>
+                                <p style="color: #666; font-size: 0.85rem;">2,500+ Successful Surgeries</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Doctor 2: General Medicine -->
+                    <div class="doctor-card">
+                        <div style="text-align: center; padding-bottom: 1rem; border-bottom: 2px solid #2d8a99;">
+                            <div class="doctor-avatar">👨‍⚕️</div>
+                            <h4 style="color: #1a3a4a; margin: 1rem 0 0.5rem 0;">Dr. Michael Brown</h4>
+                            <p style="color: #2d8a99; font-weight: 600; margin: 0;">General Medicine Expert</p>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <div style="margin-bottom: 1rem;">
+                                <p style="color: #666; font-size: 0.9rem; line-height: 1.6;">Comprehensive healthcare specialist providing preventive care, diagnosis, and treatment for all general medical conditions.</p>
+                            </div>
+                            <div style="background: #f9f9f9; padding: 1rem; border-radius: 8px; border-left: 4px solid #2d8a99; margin-bottom: 1rem;">
+                                <p style="color: #1a3a4a; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">📅 Available Slots:</p>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                                    <span style="color: #666; font-size: 0.85rem;">9:00 AM</span>
+                                    <span style="color: #666; font-size: 0.85rem;">11:00 AM</span>
+                                    <span style="color: #666; font-size: 0.85rem;">3:00 PM</span>
+                                    <span style="color: #666; font-size: 0.85rem;">5:00 PM</span>
+                                </div>
+                            </div>
+                            <div style="background: #e8f4f8; padding: 1rem; border-radius: 8px;">
+                                <p style="color: #2d8a99; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">✓ Patients Served: 10,000+</p>
+                                <p style="color: #666; font-size: 0.85rem;">Available for routine and complex cases</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Doctor 3: Pediatrics -->
+                    <div class="doctor-card">
+                        <div style="text-align: center; padding-bottom: 1rem; border-bottom: 2px solid #2d8a99;">
+                            <div class="doctor-avatar">👩‍⚕️</div>
+                            <h4 style="color: #1a3a4a; margin: 1rem 0 0.5rem 0;">Dr. Emily Davis</h4>
+                            <p style="color: #2d8a99; font-weight: 600; margin: 0;">Pediatrics Specialist</p>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <div style="margin-bottom: 1rem;">
+                                <p style="color: #666; font-size: 0.9rem; line-height: 1.6;">Specialized pediatric care with focus on child healthcare, developmental medicine, and maternal-child health.</p>
+                            </div>
+                            <div style="background: #f9f9f9; padding: 1rem; border-radius: 8px; border-left: 4px solid #2d8a99; margin-bottom: 1rem;">
+                                <p style="color: #1a3a4a; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">📅 Available Slots:</p>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                                    <span style="color: #666; font-size: 0.85rem;">10:30 AM</span>
+                                    <span style="color: #666; font-size: 0.85rem;">1:00 PM</span>
+                                    <span style="color: #666; font-size: 0.85rem;">3:30 PM</span>
+                                    <span style="color: #666; font-size: 0.85rem;">4:30 PM</span>
+                                </div>
+                            </div>
+                            <div style="background: #e8f4f8; padding: 1rem; border-radius: 8px;">
+                                <p style="color: #2d8a99; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">✓ Success Rate: 96%</p>
+                                <p style="color: #666; font-size: 0.85rem;">5,000+ Young Patients Treated</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Doctor 4: Orthopedics -->
+                    <div class="doctor-card">
+                        <div style="text-align: center; padding-bottom: 1rem; border-bottom: 2px solid #2d8a99;">
+                            <div class="doctor-avatar">👨‍⚕️</div>
+                            <h4 style="color: #1a3a4a; margin: 1rem 0 0.5rem 0;">Dr. James Mitchell</h4>
+                            <p style="color: #2d8a99; font-weight: 600; margin: 0;">Orthopedic Surgeon</p>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <div style="margin-bottom: 1rem;">
+                                <p style="color: #666; font-size: 0.9rem; line-height: 1.6;">Expert in joint replacement, sports medicine, and minimally invasive orthopedic surgical procedures.</p>
+                            </div>
+                            <div style="background: #f9f9f9; padding: 1rem; border-radius: 8px; border-left: 4px solid #2d8a99; margin-bottom: 1rem;">
+                                <p style="color: #1a3a4a; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">🏆 Top Cases:</p>
+                                <ul style="margin: 0; padding-left: 1rem; font-size: 0.85rem; color: #666;">
+                                    <li>Joint Replacement - 2,000+ cases</li>
+                                    <li>Hip Surgery - 1,500+ cases</li>
+                                    <li>Sports Injuries - 3,000+ cases</li>
+                                </ul>
+                            </div>
+                            <div style="background: #e8f4f8; padding: 1rem; border-radius: 8px;">
+                                <p style="color: #2d8a99; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">✓ Success Rate: 97%</p>
+                                <p style="color: #666; font-size: 0.85rem;">Minimally invasive techniques</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div style="margin-bottom: 4rem;">
+                <h3 style="text-align: center; margin-bottom: 2rem; color: #1a3a4a; font-size: 1.8rem;">Get In Touch</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">📍</div>
+                        <h3>Location</h3>
+                        <p>123 Medical Plaza, Healthcare District<br>New York, NY 10001</p>
+                    </div>
+                    <div class="info-card emergency">
+                        <div class="info-icon">🚑</div>
+                        <h3>Emergency Helpline</h3>
+                        <p style="font-size: 1.3rem; font-weight: bold; color: #ff4444; margin: 0.5rem 0;">24/7: +1 (555) 911-2023</p>
+                        <p>Always available for emergencies</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">📞</div>
+                        <h3>Main Reception</h3>
+                        <p>+1 (555) 123-4567<br>info@xceleratemedical.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: #1a3a4a; color: white; padding: 3rem 1.5rem; text-align: center;">
+        <p>&copy; 2025 MediCare Healthcare Management System. All rights reserved.</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">Dedicated to providing excellence in healthcare.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
