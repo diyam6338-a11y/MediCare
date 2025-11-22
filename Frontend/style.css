@@ -1708,3 +1708,13 @@ select.form-control {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-primary);
 }
+
+/* Doctor Card Styles */
+.doctor-card-item {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.doctor-card-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
