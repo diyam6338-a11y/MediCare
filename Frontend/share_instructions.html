@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickHealth - Share Your Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #e5e5e5;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #00d4ff;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #a0a0a0;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+        
+        .alert {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid #00d4ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .alert h3 {
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .alert p {
+            color: #a0a0a0;
+            line-height: 1.6;
+        }
+        
+        .option {
+            background: #252525;
+            border: 1px solid #3a3a3a;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+        
+        .option h2 {
+            color: #00ff88;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .badge {
+            background: #00ff88;
+            color: #1a1a1a;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .code {
+            background: #1a1a1a;
+            border: 1px solid #3a3a3a;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            color: #00ff88;
+            margin: 1rem 0;
+            overflow-x: auto;
+            word-break: break-all;
+        }
+        
+        .copy-btn {
+            background: #00d4ff;
+            color: #1a1a1a;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+        }
+        
+        .copy-btn:hover {
+            background: #0099cc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+        }
+        
+        .local-url {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .local-url h3 {
+            color: #00ff88;
+            margin-bottom: 0.5rem;
+        }
+        
+        .local-url p {
+            color: #a0a0a0;
+            margin-bottom: 0.5rem;
+        }
+        
+        .url-box {
+            background: #1a1a1a;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: monospace;
+            color: #00d4ff;
+            word-break: break-all;
+            margin: 0.5rem 0;
+        }
+        
+        .steps {
+            color: #a0a0a0;
+            line-height: 1.8;
+        }
+        
+        .step {
+            margin: 0.8rem 0;
+        }
+        
+        .step strong {
+            color: #00d4ff;
+        }
+        
+        .warning {
+            background: rgba(255, 170, 0, 0.1);
+            border-left: 4px solid #ffaa00;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            color: #ffaa00;
+        }
+        
+        .success {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            color: #00ff88;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            background: #2d2d2d;
+            border: 1px solid #3a3a3a;
+            color: #e5e5e5;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .nav-btn:hover {
+            background: #00d4ff;
+            color: #1a1a1a;
+            border-color: #00d4ff;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #3a3a3a;
+            color: #a0a0a0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>QuickHealth - Share Your Platform</h1>
+        <p class="subtitle">Make your local server accessible to the world!</p>
+        
+        <div class="alert">
+            <h3>Server Status: ONLINE</h3>
+            <p>Your QuickHealth platform is running and ready to be shared!</p>
+        </div>
+        
+        <div class="local-url">
+            <h3>Local Network Access (Home/Office Network Only)</h3>
+            <p>If you want to share within your local network:</p>
+            <div class="url-box">http://10.242.247.43:8000</div>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Works on devices connected to the same WiFi/LAN</p>
+        </div>
+        
+        <div class="nav">
+            <a href="http://localhost:8000/index.html" class="nav-btn">Go to Home</a>
+            <a href="http://localhost:8000/pricing.html" class="nav-btn">View Pricing</a>
+            <a href="http://localhost:8000/dashboard.html" class="nav-btn">Dashboard</a>
+        </div>
+        
+        <h2 style="color: #00d4ff; margin-top: 3rem; margin-bottom: 1.5rem;">Option 1: Use Ngrok (Most Reliable)</h2>
+        
+        <div class="option">
+            <h2>Ngrok - Professional Public URL</h2>
+            <p style="color: #a0a0a0; margin-bottom: 1rem;">
+                The easiest and most reliable way. Ngrok automatically creates a public URL for you.
+            </p>
+            
+            <div class="steps">
+                <div class="step">
+                    <strong>Step 1:</strong> Download Ngrok from 
+                    <a href="https://ngrok.com/download" style="color: #00d4ff;" target="_blank">https://ngrok.com/download</a>
+                </div>
+                
+                <div class="step">
+                    <strong>Step 2:</strong> Extract the .zip file to your Desktop or Downloads
+                </div>
+                
+                <div class="step">
+                    <strong>Step 3:</strong> Open Command Prompt in the ngrok folder and run:
+                    <div class="code">ngrok http 8000</div>
+                    <button class="copy-btn" onclick="copyCode('ngrok http 8000')">Copy</button>
+                </div>
+                
+                <div class="step">
+                    <strong>Step 4:</strong> You'll see a PUBLIC URL like: <code style="color: #00ff88;">https://abc123-xyz.ngrok.io</code>
+                </div>
+                
+                <div class="step">
+                    <strong>Step 5:</strong> Share that URL with anyone!
+                </div>
+            </div>
+            
+            <div class="success">
+                EASIEST METHOD<br>
+                Works immediately<br>
+                No account required for free version<br>
+                Most stable
+            </div>
+        </div>
+        
+        <h2 style="color: #00d4ff; margin-top: 3rem; margin-bottom: 1.5rem;">Option 2: Use Expose (Alternative)</h2>
+        
+        <div class="option">
+            <h2>Expose - Simple Tunneling</h2>
+            <p style="color: #a0a0a0; margin-bottom: 1rem;">
+                Another excellent free alternative - no signup required.
+            </p>
+            
+            <div class="steps">
+                <div class="step">
+                    <strong>Step 1:</strong> Download Expose from 
+                    <a href="https://expose.dev" style="color: #00d4ff;" target="_blank">https://expose.dev</a>
+                </div>
+                
+                <div class="step">
+                    <strong>Step 2:</strong> Extract and run:
+                    <div class="code">expose --host=expose.dev http://localhost:8000</div>
+                    <button class="copy-btn" onclick="copyCode('expose --host=expose.dev http://localhost:8000')">Copy</button>
+                </div>
+                
+                <div class="step">
+                    <strong>Step 3:</strong> Get your public URL and share!
+                </div>
+            </div>
+        </div>
+        
+        <h2 style="color: #00d4ff; margin-top: 3rem; margin-bottom: 1.5rem;">Option 3: Use Python (No Installation)</h2>
+        
+        <div class="option">
+            <h2>Python Localtunnel (Simplest)</h2>
+            <p style="color: #a0a0a0; margin-bottom: 1rem;">
+                Install with pip and run one command!
+            </p>
+            
+            <div class="steps">
+                <div class="step">
+                    <strong>Step 1:</strong> Install localtunnel in Command Prompt:
+                    <div class="code">pip install pyngrok</div>
+                    <button class="copy-btn" onclick="copyCode('pip install pyngrok')">Copy</button>
+                </div>
+                
+                <div class="step">
+                    <strong>Step 2:</strong> Create a file called <code>share.py</code> with this content:
+                    <div class="code">from pyngrok import ngrok
+url = ngrok.connect(8000)
+print(f'Public URL: {url}')
+input('Press Enter to stop...')</div>
+                </div>
+                
+                <div class="step">
+                    <strong>Step 3:</strong> Run:
+                    <div class="code">python share.py</div>
+                    <button class="copy-btn" onclick="copyCode('python share.py')">Copy</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="warning" style="margin-top: 3rem;">
+            IMPORTANT: Choose Option 1 (Ngrok) - it's the simplest and most reliable for your use case!
+        </div>
+        
+        <div class="success" style="margin-top: 1rem;">
+            All options are free and work instantly. Pick whichever is easiest for you!
+        </div>
+        
+        <footer>
+            QuickHealth Platform - Ready to Share
+        </footer>
+    </div>
+    
+    <script>
+        function copyCode(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('COPIED TO CLIPBOARD!\n\nNow paste it in Command Prompt.');
+            }).catch(() => {
+                alert('Please copy manually from the code box.');
+            });
+        }
+    </script>
+</body>
+</html>

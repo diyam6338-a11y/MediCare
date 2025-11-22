@@ -1,0 +1,2167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickHealth - Hospital Management System</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* ========================================
+           FRONTEND: CSS STYLING - DARK THEME
+           ======================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-card: #252525;
+            --text-primary: #e5e5e5;
+            --text-secondary: #a0a0a0;
+            --accent-primary: #00d4ff;
+            --accent-secondary: #0099cc;
+            --success: #00ff88;
+            --warning: #ffaa00;
+            --danger: #ff4444;
+            --border: #3a3a3a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        header {
+            background: var(--bg-secondary);
+            padding: 1rem 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            box-sizing: border-box;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-primary);
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+            word-break: break-word;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            word-break: break-word;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .role-selection {
+            display: none;
+            padding: 3rem 2rem;
+        }
+
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem 1.5rem;
+            width: 100%;
+            box-sizing: border-box;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .role-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid var(--border);
+        }
+
+        .role-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 5px 20px rgba(0,212,255,0.3);
+        }
+
+        .role-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .portal-section {
+            display: none;
+            padding: 2rem 1.5rem;
+            max-width: 100%;
+            width: 100%;
+            box-sizing: border-box;
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .form-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .demo-credentials {
+            background: var(--bg-secondary);
+            border: 1px solid var(--accent-primary);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .demo-credentials h4 {
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-credentials p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0.3rem 0;
+        }
+
+        .dashboard {
+            display: none;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-primary);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .chart-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .table-container {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-urgent {
+            background: rgba(255,68,68,0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .status-pending {
+            background: rgba(255,170,0,0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .status-ready {
+            background: rgba(0,255,136,0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--bg-card);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            z-index: 3000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--accent-primary);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: var(--accent-primary);
+            border-bottom-color: var(--accent-primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .section {
+    padding: 4rem 2rem;
+    width: 100vw;
+    max-width: none;
+    margin: 0;
+
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--accent-primary);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 4rem 2rem;
+        width: 100vw;
+        max-width: none;
+        margin: 0;
+        }
+
+        .about-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .about-card h3 {
+            color: var(--accent-primary);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 4rem 2rem;
+        width: 100vw;
+        max-width: none;
+        margin: 0;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .nav-links {
+                gap: 0.75rem;
+                font-size: 0.85rem;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+                gap: 1.5rem;
+            }
+
+            .portal-section {
+                padding: 1.5rem 1rem;
+            }
+
+            .form-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .dashboard {
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                gap: 1rem;
+            }
+
+            .role-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            html, body {
+                width: 100%;
+                max-width: 100vw;
+                overflow-x: hidden;
+            }
+
+            header {
+                padding: 0.75rem 0.5rem;
+            }
+
+            nav {
+                padding: 0 0.25rem;
+                gap: 0.5rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+                font-size: 0.75rem;
+            }
+
+            .nav-links a {
+                padding: 0.25rem 0.5rem;
+                white-space: nowrap;
+            }
+
+            .hero {
+                padding: 1.5rem 0.75rem;
+            }
+
+            .hero h1 {
+                font-size: 1.3rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+                width: 100%;
+            }
+
+            .btn-primary {
+                width: 100%;
+            }
+
+            .role-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                padding: 1rem 0.5rem;
+            }
+
+            .role-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .role-icon {
+                font-size: 3rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .role-card h3 {
+                font-size: 1rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .role-card p {
+                font-size: 0.8rem;
+            }
+
+            .portal-section {
+                padding: 1rem 0.5rem;
+                max-width: 100%;
+            }
+
+            .form-card {
+                padding: 1.25rem 1rem;
+                width: 100%;
+            }
+
+            .form-group {
+                margin-bottom: 1rem;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 0.6rem 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            .dashboard {
+                padding: 1rem 0.5rem;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 0;
+            }
+
+            .chart-card {
+                padding: 1rem;
+            }
+
+            .table-container {
+                padding: 0.75rem;
+                font-size: 0.85rem;
+            }
+
+            table {
+                font-size: 0.8rem;
+            }
+
+            table th, table td {
+                padding: 0.5rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem 1rem;
+                max-height: 90vh;
+            }
+
+            .toast {
+                bottom: 1rem;
+                right: 1rem;
+                padding: 0.75rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .tabs {
+                gap: 0.5rem;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+
+            .tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+                white-space: nowrap;
+            }
+
+            .section {
+                padding: 1.5rem 0.75rem;
+            }
+
+            .section h2 {
+                font-size: 1.4rem;
+                margin-bottom: 1rem;
+            }
+
+            .demo-credentials {
+                padding: 0.75rem;
+                font-size: 0.8rem;
+            }
+
+            .about-card, .service-item {
+                padding: 1rem;
+                margin-bottom: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo" onclick="showSection('home')">QuickHealth</div>
+            <ul class="nav-links">
+                <li><a href="#home" onclick="showSection('home')">Home</a></li>
+                <li><a href="#about" onclick="scrollToSection('about')">About</a></li>
+                <li><a href="#services" onclick="scrollToSection('services')">Services</a></li>
+                <li><a href="#" onclick="showRoleSelection()">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <h1>Advanced Hospital Management System</h1>
+        <p>Automating discharge workflows, resource management, and patient care</p>
+        <button class="btn btn-primary" onclick="openBookingModal()">Book Appointment</button>
+    </section>
+
+    <section class="section" id="about">
+        <h2>About QuickHealth</h2>
+        <div class="about-content">
+            <div class="about-card">
+                <h3>15+</h3>
+                <p>Years of Excellence</p>
+            </div>
+            <div class="about-card">
+                <h3>150+</h3>
+                <p>Specialist Doctors</p>
+            </div>
+            <div class="about-card">
+                <h3>500+</h3>
+                <p>Bed Capacity</p>
+            </div>
+            <div class="about-card">
+                <h3>12</h3>
+                <p>Specialized Departments</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <p style="max-width: 800px; margin: 0 auto; line-height: 1.8;">
+                QuickHealth is committed to providing compassionate, high-quality healthcare with cutting-edge technology. 
+                We are JCI Accredited, NABH Certified, and ISO 9001:2015 compliant.
+            </p>
+        </div>
+    </section>
+
+    <section class="section" id="services">
+        <h2>Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🚨</div>
+                <h3>Emergency Care</h3>
+                <p>24/7 emergency services with rapid response team</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">❤️</div>
+                <h3>Cardiology</h3>
+                <p>Advanced cardiac care and surgery</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🧠</div>
+                <h3>Neurology</h3>
+                <p>Specialized brain and nervous system treatment</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">👶</div>
+                <h3>Pediatrics</h3>
+                <p>Comprehensive child healthcare services</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🦴</div>
+                <h3>Orthopedics</h3>
+                <p>Bone and joint treatment and surgery</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📋</div>
+                <h3>Automated Discharge</h3>
+                <p>Streamlined discharge workflow management</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🏥</div>
+                <h3>Resource Management</h3>
+                <p>Real-time tracking of beds, staff, and ambulances</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💻</div>
+                <h3>Patient Portal</h3>
+                <p>Online access to records and reports</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="role-selection" id="roleSelection">
+        <h2 style="text-align: center; margin-bottom: 2rem;">Select Your Role</h2>
+        <div class="role-grid">
+            <div class="role-card" onclick="showPortal('doctor')">
+                <div class="role-icon">👨‍⚕️</div>
+                <h3>Doctor</h3>
+                <p>Access patient records and consultations</p>
+            </div>
+            <div class="role-card" onclick="showPortal('nurse')">
+                <div class="role-icon">👩‍⚕️</div>
+                <h3>Nurse</h3>
+                <p>Manage patient care and tasks</p>
+            </div>
+            <div class="role-card" onclick="showPortal('patient')">
+                <div class="role-icon">🧑‍🦰</div>
+                <h3>Patient</h3>
+                <p>View reports and book appointments</p>
+            </div>
+            <div class="role-card" onclick="showPortal('staff')">
+                <div class="role-icon">👔</div>
+                <h3>Staff</h3>
+                <p>Hospital operations and management</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctor Portal -->
+    <section class="portal-section" id="doctorPortal">
+        <div class="form-card" id="doctorLogin">
+            <h2>Doctor Login</h2>
+            <div class="demo-credentials">
+                <h4>🔑 Demo Credentials</h4>
+                <p><strong>Email:</strong> doctor@quickhealth.com</p>
+                <p><strong>Password:</strong> doctor123</p>
+                <button class="btn btn-secondary" style="margin-top: 0.5rem; width: 100%;" 
+                        onclick="useDemoCredentials('doctor')">Use Demo Credentials</button>
+            </div>
+            <form onsubmit="handleLogin(event, 'doctor')">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="doctorEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="doctorPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                <p style="text-align: center; margin-top: 1rem;">
+                    <a href="#" onclick="showRegisterForm('doctor'); return false;" 
+                       style="color: var(--accent-primary);">Don't have an account? Register</a>
+                </p>
+            </form>
+        </div>
+
+        <div class="form-card" id="doctorRegister" style="display: none;">
+            <h2>Doctor Registration</h2>
+            <form onsubmit="handleRegister(event, 'doctor')">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" required>
+                </div>
+                <div class="form-group">
+                    <label>Specialty</label>
+                    <select required>
+                        <option value="">Select Specialty</option>
+                        <option>Cardiology</option>
+                        <option>Neurology</option>
+                        <option>Pediatrics</option>
+                        <option>Orthopedics</option>
+                        <option>General Medicine</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Medical License Number</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
+                <p style="text-align: center; margin-top: 1rem;">
+                    <a href="#" onclick="showLoginForm('doctor'); return false;" 
+                       style="color: var(--accent-primary);">Already have an account? Login</a>
+                </p>
+            </form>
+        </div>
+
+        <div class="dashboard" id="doctorDashboard">
+            <div class="dashboard-header">
+                <h2>Doctor Dashboard</h2>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab(event, 'doctor-patients')">Patients</button>
+                <button class="tab" onclick="switchTab(event, 'doctor-appointments')">Appointments</button>
+            </div>
+
+            <div class="tab-content active" id="doctor-patients">
+                <div class="table-container">
+                    <h3>Patient List</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Room</th>
+                                <th>Diagnosis</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="doctorPatientsList"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-content" id="doctor-appointments">
+                <div class="table-container">
+                    <h3>Today's Appointments</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Patient</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>10:00 AM</td>
+                                <td>John Doe</td>
+                                <td>Follow-up</td>
+                                <td><span class="status-badge status-ready">Scheduled</span></td>
+                                <td><button class="btn btn-primary" onclick="startConsultation('P1234')">Start Consultation</button></td>
+                            </tr>
+                            <tr>
+                                <td>11:30 AM</td>
+                                <td>Jane Smith</td>
+                                <td>Check-up</td>
+                                <td><span class="status-badge status-pending">Waiting</span></td>
+                                <td><button class="btn btn-primary" onclick="startConsultation('P1235')">Start Consultation</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nurse Portal -->
+    <section class="portal-section" id="nursePortal">
+        <div class="form-card" id="nurseLogin">
+            <h2>Nurse Login</h2>
+            <div class="demo-credentials">
+                <h4>🔑 Demo Credentials</h4>
+                <p><strong>Email:</strong> nurse@quickhealth.com</p>
+                <p><strong>Password:</strong> nurse123</p>
+                <button class="btn btn-secondary" style="margin-top: 0.5rem; width: 100%;" 
+                        onclick="useDemoCredentials('nurse')">Use Demo Credentials</button>
+            </div>
+            <form onsubmit="handleLogin(event, 'nurse')">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="nurseEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="nursePassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                <p style="text-align: center; margin-top: 1rem;">
+                    <a href="#" onclick="showRegisterForm('nurse'); return false;" 
+                       style="color: var(--accent-primary);">Don't have an account? Register</a>
+                </p>
+            </form>
+        </div>
+
+        <div class="form-card" id="nurseRegister" style="display: none;">
+            <h2>Nurse Registration</h2>
+            <form onsubmit="handleRegister(event, 'nurse')">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" required>
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <select required>
+                        <option value="">Select Department</option>
+                        <option>ICU</option>
+                        <option>Emergency</option>
+                        <option>Ward A</option>
+                        <option>Ward B</option>
+                        <option>Pediatrics</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Nursing License Number</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
+                <p style="text-align: center; margin-top: 1rem;">
+                    <a href="#" onclick="showLoginForm('nurse'); return false;" 
+                       style="color: var(--accent-primary);">Already have an account? Login</a>
+                </p>
+            </form>
+        </div>
+
+        <div class="dashboard" id="nurseDashboard">
+            <div class="dashboard-header">
+                <h2>Nurse Dashboard</h2>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab(event, 'nurse-patients')">Patients</button>
+                <button class="tab" onclick="switchTab(event, 'nurse-tasks')">Tasks</button>
+            </div>
+
+            <div class="tab-content active" id="nurse-patients">
+                <div class="table-container">
+                    <h3>Assigned Patients</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Room</th>
+                                <th>Vitals</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="nursePatientsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-content" id="nurse-tasks">
+                <div class="table-container">
+                    <h3>Today's Tasks</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Due</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="nurseTasksTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Patient Portal -->
+    <section class="portal-section" id="patientPortal">
+        <div class="form-card" id="patientLogin">
+            <h2>Patient Login</h2>
+            <div class="demo-credentials">
+                <h4>🔑 Demo Credentials</h4>
+                <p><strong>Email:</strong> patient@quickhealth.com</p>
+                <p><strong>Password:</strong> patient123</p>
+                <button class="btn btn-secondary" style="margin-top: 0.5rem; width: 100%;" 
+                        onclick="useDemoCredentials('patient')">Use Demo Credentials</button>
+            </div>
+            <form onsubmit="handleLogin(event, 'patient')">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="patientEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="patientPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                <p style="text-align: center; margin-top: 1rem;">
+                    <a href="#" onclick="showRegisterForm('patient'); return false;" 
+                       style="color: var(--accent-primary);">Don't have an account? Register</a>
+                </p>
+            </form>
+        </div>
+
+        <div class="form-card" id="patientRegister" style="display: none;">
+            <h2>Patient Registration</h2>
+            <form onsubmit="handleRegister(event, 'patient')">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    <input type="date" required>
+                </div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select required>
+                        <option value="">Select Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Blood Group</label>
+                    <select required>
+                        <option value="">Select Blood Group</option>
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
+                <p style="text-align: center; margin-top: 1rem;">
+                    <a href="#" onclick="showLoginForm('patient'); return false;" 
+                       style="color: var(--accent-primary);">Already have an account? Login</a>
+                </p>
+            </form>
+        </div>
+
+        <div class="dashboard" id="patientDashboard">
+            <div class="dashboard-header">
+                <h2>Patient Dashboard</h2>
+                <div>
+                    <span style="margin-right: 1rem; cursor: pointer;" onclick="showNotifications()">
+                        🔔 <span id="notificationBadge" class="status-badge status-urgent" style="display: inline;">3</span>
+                    </span>
+                    <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">72</div>
+                    <div class="stat-label">❤️ Heart Rate (BPM)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">120/80</div>
+                    <div class="stat-label">🩺 Blood Pressure</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">98.6°F</div>
+                    <div class="stat-label">🌡️ Temperature</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">98%</div>
+                    <div class="stat-label">💨 Oxygen</div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h3>Lab Reports</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Test Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nov 20, 2025</td>
+                            <td>Complete Blood Count</td>
+                            <td><span class="status-badge status-ready">Ready</span></td>
+                            <td><button class="btn btn-primary" onclick="downloadReport('CBC')">Download Report</button></td>
+                        </tr>
+                        <tr>
+                            <td>Nov 19, 2025</td>
+                            <td>X-Ray Chest</td>
+                            <td><span class="status-badge status-ready">Ready</span></td>
+                            <td><button class="btn btn-primary" onclick="downloadReport('XRay')">Download Report</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <h3>Upcoming Appointments</h3>
+                <button class="btn btn-primary" onclick="openBookingModal()" style="margin-bottom: 1rem;">Book New Appointment</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Doctor</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nov 22, 2025</td>
+                            <td>10:00 AM</td>
+                            <td>Dr. Sarah Williams</td>
+                            <td>Cardiology</td>
+                            <td><span class="status-badge status-ready">Confirmed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <h3>Queue Status</h3>
+                <button class="btn btn-secondary" onclick="subscribeNotifications()">Get Notifications</button>
+                <div style="margin-top: 1.5rem;">
+                    <p><strong>Emergency:</strong> <span class="status-badge status-ready">Low (5 mins)</span></p>
+                    <p><strong>OPD:</strong> <span class="status-badge status-pending">Medium (15 mins)</span></p>
+                    <p><strong>Lab:</strong> <span class="status-badge status-urgent">High (30 mins)</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Staff Portal -->
+    <section class="portal-section" id="staffPortal">
+        <div class="form-card" id="staffLogin">
+            <h2>Staff Login</h2>
+            <div class="demo-credentials">
+                <h4>🔑 Demo Credentials</h4>
+                <p><strong>Email:</strong> staff@quickhealth.com</p>
+                <p><strong>Password:</strong> staff123</p>
+                <button class="btn btn-secondary" style="margin-top: 0.5rem; width: 100%;" 
+                        onclick="useDemoCredentials('staff')">Use Demo Credentials</button>
+            </div>
+            <form onsubmit="handleLogin(event, 'staff')">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="staffEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="staffPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                <p style="text-align: center; margin-top: 1rem;">
+                    <a href="#" onclick="showRegisterForm('staff'); return false;" 
+                       style="color: var(--accent-primary);">Don't have an account? Register</a>
+                </p>
+            </form>
+        </div>
+
+        <div class="form-card" id="staffRegister" style="display: none;">
+            <h2>Staff Registration</h2>
+            <form onsubmit="handleRegister(event, 'staff')">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" required>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select required>
+                        <option value="">Select Role</option>
+                        <option>Administrator</option>
+                        <option>Operations Manager</option>
+                        <option>Discharge Coordinator</option>
+                        <option>Resource Manager</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <select required>
+                        <option value="">Select Department</option>
+                        <option>Administration</option>
+                        <option>Operations</option>
+                        <option>HR</option>
+                        <option>Finance</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Employee ID</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
+                <p style="text-align: center; margin-top: 1rem;">
+                    <a href="#" onclick="showLoginForm('staff'); return false;" 
+                       style="color: var(--accent-primary);">Already have an account? Login</a>
+                </p>
+            </form>
+        </div>
+
+        <div class="dashboard" id="staffDashboard">
+            <div class="dashboard-header">
+                <h2>Staff Dashboard - Hospital Operations</h2>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">45</div>
+                    <div class="stat-label">Patients Admitted Today</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">32</div>
+                    <div class="stat-label">Pending Discharges</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Active Alerts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">85%</div>
+                    <div class="stat-label">Bed Occupancy</div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h3>📋 Automated Discharge Management</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient</th>
+                            <th>Room</th>
+                            <th>Criteria Status</th>
+                            <th>Ready Since</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>204</td>
+                            <td>
+                                <span class="status-badge status-ready">✓ Medical</span>
+                                <span class="status-badge status-ready">✓ Bills</span>
+                                <span class="status-badge status-ready">✓ Transport</span>
+                            </td>
+                            <td>2 hours ago</td>
+                            <td><button class="btn btn-primary" onclick="processDischarge('P1234')">Process Discharge</button></td>
+                        </tr>
+                        <tr>
+                            <td>Sarah Williams</td>
+                            <td>305</td>
+                            <td>
+                                <span class="status-badge status-ready">✓ Medical</span>
+                                <span class="status-badge status-ready">✓ Bills</span>
+                                <span class="status-badge status-urgent">✗ Transport</span>
+                            </td>
+                            <td>45 minutes ago</td>
+                            <td><button class="btn btn-secondary" disabled>Pending Transport</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>Discharge Status</h3>
+                    <canvas id="dischargeChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Weekly Workflow Efficiency</h3>
+                    <canvas id="workflowChart"></canvas>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h3>🔔 Priority Alerts</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Alert</th>
+                            <th>Time</th>
+                            <th>Priority</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="staffAlertsTable"></tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <h3>🏥 Resource Availability</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">ICU Beds</div>
+                        <div style="margin-top: 0.5rem;">
+                            <progress value="12" max="20" style="width: 100%; height: 20px;"></progress>
+                            <p style="margin-top: 0.5rem;">12 / 20 Available</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">General Beds</div>
+                        <div style="margin-top: 0.5rem;">
+                            <progress value="145" max="200" style="width: 100%; height: 20px;"></progress>
+                            <p style="margin-top: 0.5rem;">145 / 200 Available</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Ambulances</div>
+                        <div style="margin-top: 0.5rem;">
+                            <progress value="5" max="8" style="width: 100%; height: 20px;"></progress>
+                            <p style="margin-top: 0.5rem;">5 / 8 Available</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Staff On Duty</div>
+                        <div style="margin-top: 0.5rem;">
+                            <p>Doctors: 24 / 30</p>
+                            <p>Nurses: 45 / 50</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h3>🏢 Nearby Hospital Network</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hospital</th>
+                            <th>Distance</th>
+                            <th>ICU Beds</th>
+                            <th>Emergency</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>City General Hospital</td>
+                            <td>2.5 km</td>
+                            <td><span class="status-badge status-ready">5 Available</span></td>
+                            <td><span class="status-badge status-ready">Open</span></td>
+                            <td><button class="btn btn-primary" onclick="initiateTransfer('CGH')">Initiate Transfer</button></td>
+                        </tr>
+                        <tr>
+                            <td>Metro Medical Center</td>
+                            <td>4.1 km</td>
+                            <td><span class="status-badge status-pending">2 Available</span></td>
+                            <td><span class="status-badge status-ready">Open</span></td>
+                            <td><button class="btn btn-primary" onclick="initiateTransfer('MMC')">Initiate Transfer</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <div id="modalContainer"></div>
+
+    <script>
+        // BACKEND TODO: Replace these with actual API calls
+        const demoCredentials = {
+            doctor: { email: 'doctor@quickhealth.com', password: 'doctor123' },
+            nurse: { email: 'nurse@quickhealth.com', password: 'nurse123' },
+            patient: { email: 'patient@quickhealth.com', password: 'patient123' },
+            staff: { email: 'staff@quickhealth.com', password: 'staff123' }
+        };
+
+        const appState = {
+            currentRole: null,
+            notificationCount: 3,
+            patients: [
+                {
+                    id: 'P1234',
+                    name: 'John Doe',
+                    age: 45,
+                    room: '204',
+                    diagnosis: 'Post-surgery recovery',
+                    vitals: { heartRate: 72, bloodPressure: '120/80', temperature: 98.6, oxygen: 98 },
+                    medications: [
+                        { name: 'Aspirin', dosage: '100mg', frequency: 'Daily' },
+                        { name: 'Antibiotics', dosage: '500mg', frequency: 'Twice daily' }
+                    ],
+                    history: [
+                        'Cardiac surgery - Nov 15, 2025',
+                        'Hypertension diagnosed - 2020',
+                        'No known allergies'
+                    ]
+                },
+                {
+                    id: 'P1235',
+                    name: 'Jane Smith',
+                    age: 32,
+                    room: '305',
+                    diagnosis: 'Pneumonia',
+                    vitals: { heartRate: 78, bloodPressure: '118/75', temperature: 99.2, oxygen: 95 },
+                    medications: [
+                        { name: 'Amoxicillin', dosage: '250mg', frequency: 'Three times daily' }
+                    ],
+                    history: [
+                        'Admitted - Nov 19, 2025',
+                        'Respiratory infection',
+                        'No prior hospitalizations'
+                    ]
+                }
+            ],
+            nurseTasks: [
+                { id: 1, task: 'Medication Round - Ward A', due: '2:00 PM', status: 'pending' },
+                { id: 2, task: 'Vitals Check - ICU', due: 'Overdue: 15 mins', status: 'urgent' },
+                { id: 3, task: 'Patient Discharge - Room 204', due: 'Scheduled: 4:30 PM', status: 'pending' }
+            ],
+            staffAlerts: [
+                { id: 1, title: 'ICU Bed Request - Emergency', time: '2 minutes ago', priority: 'urgent' },
+                { id: 2, title: 'Equipment Maintenance - Ward B', time: '15 minutes ago', priority: 'normal' }
+            ]
+        };
+
+        function showSection(section) {
+            // Hide all portal sections and role selection but show content sections
+            document.querySelectorAll('[id$="Portal"], #roleSelection').forEach(s => s.style.display = 'none');
+            // Show all main content sections
+            document.querySelector('.hero').style.display = 'block';
+            const aboutSection = document.getElementById('about');
+            const servicesSection = document.getElementById('services');
+            if (aboutSection) aboutSection.style.display = 'block';
+            if (servicesSection) servicesSection.style.display = 'block';
+            if (section === 'home') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function scrollToSection(sectionId) {
+            // First ensure home page content is visible
+            document.querySelectorAll('[id$="Portal"], #roleSelection').forEach(s => s.style.display = 'none');
+            document.querySelector('.hero').style.display = 'block';
+            const aboutSection = document.getElementById('about');
+            const servicesSection = document.getElementById('services');
+            if (aboutSection) aboutSection.style.display = 'block';
+            if (servicesSection) servicesSection.style.display = 'block';
+            
+            // Then scroll to the requested section
+            const section = document.getElementById(sectionId);
+            if (section) {
+                setTimeout(() => {
+                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        }
+
+        function showRoleSelection() {
+            // Hide all portal sections
+            document.querySelectorAll('[id$="Portal"]').forEach(s => s.style.display = 'none');
+            // Hide content sections
+            document.querySelector('.hero').style.display = 'none';
+            const aboutSection = document.getElementById('about');
+            const servicesSection = document.getElementById('services');
+            if (aboutSection) aboutSection.style.display = 'none';
+            if (servicesSection) servicesSection.style.display = 'none';
+            // Show role selection
+            document.getElementById('roleSelection').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showPortal(role) {
+            // Hide all portals and role selection
+            document.querySelectorAll('[id$="Portal"], #roleSelection').forEach(s => s.style.display = 'none');
+            // Hide content sections
+            document.querySelector('.hero').style.display = 'none';
+            const aboutSection = document.getElementById('about');
+            const servicesSection = document.getElementById('services');
+            if (aboutSection) aboutSection.style.display = 'none';
+            if (servicesSection) servicesSection.style.display = 'none';
+            // Show selected portal
+            const portalId = role + 'Portal';
+            const portal = document.getElementById(portalId);
+            if (portal) portal.style.display = 'block';
+            appState.currentRole = role;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function useDemoCredentials(role) {
+            const creds = demoCredentials[role];
+            document.getElementById(role + 'Email').value = creds.email;
+            document.getElementById(role + 'Password').value = creds.password;
+        }
+
+        function showRegisterForm(role) {
+            document.getElementById(role + 'Login').style.display = 'none';
+            document.getElementById(role + 'Register').style.display = 'block';
+        }
+
+        function showLoginForm(role) {
+            document.getElementById(role + 'Register').style.display = 'none';
+            document.getElementById(role + 'Login').style.display = 'block';
+        }
+
+        function handleLogin(event, role) {
+            event.preventDefault();
+            const email = document.getElementById(role + 'Email').value;
+            const password = document.getElementById(role + 'Password').value;
+
+            if (email === demoCredentials[role].email && password === demoCredentials[role].password) {
+                showToast('Login successful!', 'success');
+                document.getElementById(role + 'Login').style.display = 'none';
+                document.getElementById(role + 'Dashboard').style.display = 'block';
+                initializeDashboard(role);
+            } else {
+                showToast('Invalid credentials', 'error');
+            }
+        }
+
+        function handleRegister(event, role) {
+            event.preventDefault();
+            showToast('Registration successful! Please login.', 'success');
+            showLoginForm(role);
+        }
+
+        function logout() {
+            appState.currentRole = null;
+            showSection('home');
+            showToast('Logged out successfully', 'info');
+        }
+
+        function initializeDashboard(role) {
+            switch(role) {
+                case 'doctor':
+                    loadDoctorPatients();
+                    break;
+                case 'nurse':
+                    loadNursePatients();
+                    loadNurseTasks();
+                    break;
+                case 'staff':
+                    loadStaffAlerts();
+                    createStaffCharts();
+                    break;
+            }
+        }
+
+        function loadDoctorPatients() {
+            const tbody = document.getElementById('doctorPatientsList');
+            tbody.innerHTML = appState.patients.map(p => `
+                <tr>
+                    <td>${p.id}</td>
+                    <td>${p.name}</td>
+                    <td>${p.age}</td>
+                    <td>${p.room}</td>
+                    <td>${p.diagnosis}</td>
+                    <td><button class="btn btn-primary" onclick="viewPatientDetails('${p.id}')">View Details</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function loadNursePatients() {
+            const tbody = document.getElementById('nursePatientsTable');
+            tbody.innerHTML = appState.patients.map(p => `
+                <tr>
+                    <td>${p.name}</td>
+                    <td>${p.room}</td>
+                    <td>HR: ${p.vitals.heartRate}, BP: ${p.vitals.bloodPressure}</td>
+                    <td><button class="btn btn-primary" onclick="updatePatientRecord('${p.id}')">Update Record</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function loadNurseTasks() {
+            const tbody = document.getElementById('nurseTasksTable');
+            tbody.innerHTML = appState.nurseTasks.map(t => `
+                <tr>
+                    <td>${t.task}</td>
+                    <td>${t.due}</td>
+                    <td><span class="status-badge status-${t.status}">${t.status}</span></td>
+                    <td><button class="btn btn-primary" onclick="completeTask(${t.id})">Mark Complete</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function loadStaffAlerts() {
+            const tbody = document.getElementById('staffAlertsTable');
+            tbody.innerHTML = appState.staffAlerts.map(a => `
+                <tr>
+                    <td>${a.title}</td>
+                    <td>${a.time}</td>
+                    <td><span class="status-badge status-${a.priority}">${a.priority}</span></td>
+                    <td><button class="btn btn-primary" onclick="respondToAlert(${a.id})">Respond</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function viewPatientDetails(patientId) {
+            const patient = appState.patients.find(p => p.id === patientId);
+            if (!patient) return;
+
+            const modal = createModal('Patient Details', `
+                <h3>${patient.name} (${patient.id})</h3>
+                <p><strong>Age:</strong> ${patient.age} | <strong>Room:</strong> ${patient.room}</p>
+                <p><strong>Diagnosis:</strong> ${patient.diagnosis}</p>
+
+                <h4 style="margin-top: 1.5rem;">Vitals</h4>
+                <p>❤️ Heart Rate: ${patient.vitals.heartRate} BPM</p>
+                <p>🩺 Blood Pressure: ${patient.vitals.bloodPressure}</p>
+                <p>🌡️ Temperature: ${patient.vitals.temperature}°F</p>
+                <p>💨 Oxygen: ${patient.vitals.oxygen}%</p>
+
+                <h4 style="margin-top: 1.5rem;">Medications</h4>
+                ${patient.medications.map(m => `<p>💊 ${m.name} - ${m.dosage} (${m.frequency})</p>`).join('')}
+
+                <h4 style="margin-top: 1.5rem;">Medical History</h4>
+                ${patient.history.map(h => `<p>• ${h}</p>`).join('')}
+            `);
+            showModal(modal);
+        }
+
+        function startConsultation(patientId) {
+            const patient = appState.patients.find(p => p.id === patientId);
+            if (!patient) return;
+
+            const modal = createModal('Start Consultation', `
+                <h3>Consultation: ${patient.name}</h3>
+                <div class="form-group">
+                    <label>Chief Complaint</label>
+                    <textarea rows="3" placeholder="Patient's main concern..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Examination Notes</label>
+                    <textarea rows="4" placeholder="Physical examination findings..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Diagnosis</label>
+                    <input type="text" placeholder="Primary diagnosis...">
+                </div>
+                <div class="form-group">
+                    <label>Prescription</label>
+                    <textarea rows="3" placeholder="Medications and dosage..."></textarea>
+                </div>
+                <button class="btn btn-primary" onclick="saveConsultation('${patientId}')">Save Consultation</button>
+            `);
+            showModal(modal);
+        }
+
+        function saveConsultation(patientId) {
+            showToast('Consultation saved successfully', 'success');
+            closeModal();
+        }
+
+        function updatePatientRecord(patientId) {
+            const patient = appState.patients.find(p => p.id === patientId);
+            if (!patient) return;
+
+            const modal = createModal('Update Patient Record', `
+                <h3>${patient.name} - Update Vitals</h3>
+                <div class="form-group">
+                    <label>Heart Rate (BPM)</label>
+                    <input type="number" value="${patient.vitals.heartRate}">
+                </div>
+                <div class="form-group">
+                    <label>Blood Pressure</label>
+                    <input type="text" value="${patient.vitals.bloodPressure}">
+                </div>
+                <div class="form-group">
+                    <label>Temperature (°F)</label>
+                    <input type="number" step="0.1" value="${patient.vitals.temperature}">
+                </div>
+                <div class="form-group">
+                    <label>Oxygen (%)</label>
+                    <input type="number" value="${patient.vitals.oxygen}">
+                </div>
+                <div class="form-group">
+                    <label>Nursing Notes</label>
+                    <textarea rows="3" placeholder="Any observations or notes..."></textarea>
+                </div>
+                <button class="btn btn-primary" onclick="savePatientUpdate('${patientId}')">Save Update</button>
+            `);
+            showModal(modal);
+        }
+
+        function savePatientUpdate(patientId) {
+            showToast('Patient record updated successfully', 'success');
+            closeModal();
+        }
+
+        function completeTask(taskId) {
+            const task = appState.nurseTasks.find(t => t.id === taskId);
+            if (task) {
+                task.status = 'completed';
+                showToast(`Task "${task.task}" marked as complete!`, 'success');
+                loadNurseTasks();
+            }
+        }
+
+        function respondToAlert(alertId) {
+            const alert = appState.staffAlerts.find(a => a.id === alertId);
+            if (!alert) return;
+
+            const modal = createModal('Respond to Alert', `
+                <h3>${alert.title}</h3>
+                <p><strong>Time:</strong> ${alert.time}</p>
+                <p><strong>Priority:</strong> ${alert.priority}</p>
+                <div class="form-group">
+                    <label>Response Action</label>
+                    <textarea rows="4" placeholder="Describe the action taken..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select>
+                        <option>Resolved</option>
+                        <option>In Progress</option>
+                        <option>Escalated</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="saveAlertResponse(${alertId})">Submit Response</button>
+            `);
+            showModal(modal);
+        }
+
+        function saveAlertResponse(alertId) {
+            showToast('Alert response submitted', 'success');
+            closeModal();
+        }
+
+        function processDischarge(patientId) {
+            const patient = appState.patients.find(p => p.id === patientId);
+            if (!patient) return;
+
+            const modal = createModal('Process Discharge', `
+                <h3>Discharge: ${patient.name}</h3>
+                <div style="margin: 1.5rem 0;">
+                    <h4>Discharge Checklist</h4>
+                    <p>✅ Medical clearance received</p>
+                    <p>✅ Bills cleared</p>
+                    <p>✅ Transport arranged</p>
+                    <p>✅ Discharge summary prepared</p>
+                </div>
+                <div class="form-group">
+                    <label>Discharge Instructions</label>
+                    <textarea rows="4" placeholder="Post-discharge care instructions..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Follow-up Date</label>
+                    <input type="date">
+                </div>
+                <button class="btn btn-primary" onclick="completeDischarge('${patientId}')">Complete Discharge</button>
+            `);
+            showModal(modal);
+        }
+
+        function completeDischarge(patientId) {
+            showToast('Discharge processed successfully', 'success');
+            closeModal();
+        }
+
+        function initiateTransfer(hospitalCode) {
+            const modal = createModal('Initiate Patient Transfer', `
+                <h3>Transfer to ${hospitalCode === 'CGH' ? 'City General Hospital' : 'Metro Medical Center'}</h3>
+                <div class="form-group">
+                    <label>Patient</label>
+                    <select>
+                        ${appState.patients.map(p => `<option value="${p.id}">${p.name} - ${p.room}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Reason for Transfer</label>
+                    <textarea rows="3" placeholder="Medical necessity for transfer..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Required Department</label>
+                    <select>
+                        <option>ICU</option>
+                        <option>Emergency</option>
+                        <option>Cardiology</option>
+                        <option>Neurology</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Transport Method</label>
+                    <select>
+                        <option>Ambulance</option>
+                        <option>Air Ambulance</option>
+                        <option>Private Vehicle</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="confirmTransfer('${hospitalCode}')">Confirm Transfer</button>
+            `);
+            showModal(modal);
+        }
+
+        function confirmTransfer(hospitalCode) {
+            showToast('Transfer request sent successfully', 'success');
+            closeModal();
+        }
+
+        function downloadReport(reportType) {
+            showToast(`Downloading ${reportType} report...`, 'info');
+            setTimeout(() => {
+                showToast('Report downloaded successfully', 'success');
+            }, 1500);
+        }
+
+        function subscribeNotifications() {
+            appState.notificationCount++;
+            document.getElementById('notificationBadge').textContent = appState.notificationCount;
+            showToast('Subscribed to queue notifications', 'success');
+        }
+
+        function showNotifications() {
+            const modal = createModal('Notifications', `
+                <div style="margin: 1rem 0;">
+                    <p>🔔 Your turn is coming up in Emergency (5 mins)</p>
+                    <p>🔔 Lab reports are ready for download</p>
+                    <p>🔔 Upcoming appointment tomorrow at 10:00 AM</p>
+                </div>
+            `);
+            showModal(modal);
+        }
+
+        function openBookingModal() {
+            const modal = createModal('Book Appointment', `
+                <h3>Schedule an Appointment</h3>
+                <div class="form-group">
+                    <label>Department</label>
+                    <select id="bookingDept">
+                        <option>Cardiology</option>
+                        <option>Neurology</option>
+                        <option>Pediatrics</option>
+                        <option>Orthopedics</option>
+                        <option>General Medicine</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Doctor</label>
+                    <select id="bookingDoctor">
+                        <option>Dr. Sarah Williams</option>
+                        <option>Dr. Michael Brown</option>
+                        <option>Dr. Emily Davis</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="bookingDate" min="${new Date().toISOString().split('T')[0]}">
+                </div>
+                <div class="form-group">
+                    <label>Time</label>
+                    <select id="bookingTime">
+                        <option>9:00 AM</option>
+                        <option>10:00 AM</option>
+                        <option>11:00 AM</option>
+                        <option>2:00 PM</option>
+                        <option>3:00 PM</option>
+                        <option>4:00 PM</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Reason for Visit</label>
+                    <textarea id="bookingReason" rows="3" placeholder="Describe your concern..."></textarea>
+                </div>
+                <button class="btn btn-primary" onclick="confirmBooking()">Confirm Booking</button>
+            `);
+            showModal(modal);
+        }
+
+        function confirmBooking() {
+            const date = document.getElementById('bookingDate').value;
+            if (!date) {
+                showToast('Please select a date', 'error');
+                return;
+            }
+            const doctor = document.getElementById('bookingDoctor').value;
+            const time = document.getElementById('bookingTime').value;
+            showToast(`Appointment booked with ${doctor} on ${date} at ${time}`, 'success');
+            closeModal();
+        }
+
+        function createStaffCharts() {
+            const dischargeCtx = document.getElementById('dischargeChart');
+            if (dischargeCtx) {
+                new Chart(dischargeCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Ready', 'In Progress', 'Pending', 'Completed'],
+                        datasets: [{
+                            data: [12, 8, 15, 45],
+                            backgroundColor: ['#00ff88', '#ffaa00', '#ff4444', '#00d4ff']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { labels: { color: '#e5e5e5' } }
+                        }
+                    }
+                });
+            }
+
+            const workflowCtx = document.getElementById('workflowChart');
+            if (workflowCtx) {
+                new Chart(workflowCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Discharges Processed',
+                            data: [12, 15, 10, 18, 14, 8, 6],
+                            backgroundColor: '#00d4ff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { color: '#e5e5e5' },
+                                grid: { color: '#3a3a3a' }
+                            },
+                            x: {
+                                ticks: { color: '#e5e5e5' },
+                                grid: { color: '#3a3a3a' }
+                            }
+                        },
+                        plugins: {
+                            legend: { labels: { color: '#e5e5e5' } }
+                        }
+                    }
+                });
+            }
+        }
+
+        function switchTab(event, tabId) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function createModal(title, content) {
+            return `
+                <div class="modal" id="activeModal" style="display: flex;">
+                    <div class="modal-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h2>${title}</h2>
+                            <button class="btn btn-secondary" onclick="closeModal()" style="padding: 0.5rem 1rem;">✕</button>
+                        </div>
+                        ${content}
+                    </div>
+                </div>
+            `;
+        }
+
+        function showModal(modalHTML) {
+            document.getElementById('modalContainer').innerHTML = modalHTML;
+        }
+
+        function closeModal() {
+            document.getElementById('modalContainer').innerHTML = '';
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+    </script>
+</body>
+</html>

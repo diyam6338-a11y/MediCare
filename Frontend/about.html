@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - QuickHealth</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-card: #252525;
+            --text-primary: #e5e5e5;
+            --text-secondary: #a0a0a0;
+            --accent-primary: #00d4ff;
+            --accent-secondary: #0099cc;
+            --success: #00ff88;
+            --warning: #ffaa00;
+            --danger: #ff4444;
+            --border: #3a3a3a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: var(--bg-secondary);
+            padding: 1rem 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            box-sizing: border-box;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-primary);
+            cursor: pointer;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent-primary);
+            text-align: center;
+        }
+
+        .section h3 {
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .about-card {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .about-card:hover {
+            background: var(--bg-card);
+            border-color: var(--accent-primary);
+            box-shadow: 0 5px 15px rgba(0,212,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        .about-card h3 {
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .about-card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Hospital Description */
+        .hospital-description {
+            background: var(--bg-secondary);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .hospital-description h3 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .hospital-description p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .accreditations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .accreditation-badge {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--accent-primary);
+            text-align: center;
+        }
+
+        .accreditation-badge h4 {
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Top Doctors Section */
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .doctor-card {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .doctor-card:hover {
+            background: var(--bg-card);
+            border-color: var(--accent-primary);
+            box-shadow: 0 5px 15px rgba(0,212,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        .doctor-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .doctor-card h3 {
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            margin-top: 0;
+        }
+
+        .doctor-specialty {
+            color: var(--warning);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .doctor-info {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .doctor-qualifications {
+            background: var(--bg-primary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: left;
+        }
+
+        .doctor-qualifications h4 {
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .doctor-qualifications ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .doctor-qualifications li {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            padding: 0.25rem 0;
+        }
+
+        /* Specializations with Cases */
+        .specialization-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .specialization-card {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .specialization-card:hover {
+            background: var(--bg-card);
+            border-color: var(--accent-primary);
+            box-shadow: 0 5px 15px rgba(0,212,255,0.2);
+        }
+
+        .specialization-card h4 {
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            margin-top: 0;
+        }
+
+        .case-item {
+            background: var(--bg-primary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        .case-item h5 {
+            color: var(--accent-primary);
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+        }
+
+        .case-item p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        .success-rate {
+            color: var(--success);
+            font-weight: 600;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 0.75rem 1rem;
+            }
+
+            nav {
+                padding: 0 0.5rem;
+                gap: 0.75rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+
+            .section h2 {
+                font-size: 1.8rem;
+            }
+
+            .section h3 {
+                font-size: 1.3rem;
+            }
+
+            .about-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .about-card {
+                padding: 1.5rem;
+            }
+
+            .about-card h3 {
+                font-size: 2rem;
+            }
+
+            .hospital-description {
+                padding: 1.5rem;
+            }
+
+            .doctors-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .doctor-card {
+                padding: 1.5rem;
+            }
+
+            .specialization-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 0.75rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.75rem;
+                width: 100%;
+            }
+
+            .section {
+                padding: 1.5rem 0.75rem;
+            }
+
+            .section h2 {
+                font-size: 1.5rem;
+            }
+
+            .section h3 {
+                font-size: 1.2rem;
+            }
+
+            .about-card {
+                padding: 1rem;
+            }
+
+            .about-card h3 {
+                font-size: 1.5rem;
+            }
+
+            .about-card p {
+                font-size: 0.95rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .hospital-description {
+                padding: 1rem;
+            }
+
+            .doctors-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .doctor-card {
+                padding: 1rem;
+            }
+
+            .doctor-avatar {
+                width: 100px;
+                height: 100px;
+                font-size: 2.5rem;
+            }
+
+            .accreditations {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="./index.html" class="logo">QuickHealth</a>
+            <ul class="nav-links">
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./about.html">About</a></li>
+                <li><a href="./services.html">Services</a></li>
+                <li><a href="./pricing.html">Pricing</a></li>
+                <li><a href="./login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="section">
+        <h2>About QuickHealth</h2>
+        <div class="about-content">
+            <div class="about-card">
+                <h3>15+</h3>
+                <p>Years of Excellence</p>
+            </div>
+            <div class="about-card">
+                <h3>150+</h3>
+                <p>Specialist Doctors</p>
+            </div>
+            <div class="about-card">
+                <h3>500+</h3>
+                <p>Bed Capacity</p>
+            </div>
+            <div class="about-card">
+                <h3>12</h3>
+                <p>Specialized Departments</p>
+            </div>
+        </div>
+
+        <!-- Hospital Description -->
+        <div class="hospital-description">
+            <h3>🏥 About QuickHealth Hospital</h3>
+            <p>
+                QuickHealth is a leading multi-specialty hospital dedicated to providing compassionate, high-quality healthcare with cutting-edge technology. 
+                Since 2010, we have been committed to serving our community with excellence and innovation.
+            </p>
+            <p>
+                Our 500+ bed capacity hospital features state-of-the-art medical equipment, advanced diagnostic facilities, and a team of 150+ specialist doctors 
+                dedicated to patient care. We integrate advanced technology with human touch to ensure the best possible outcomes for our patients.
+            </p>
+            <p>
+                Our automated discharge workflow system streamlines patient management, reduces wait times, and ensures efficient resource allocation across all departments. 
+                We maintain the highest standards of safety, hygiene, and patient confidentiality.
+            </p>
+
+            <div class="accreditations">
+                <div class="accreditation-badge">
+                    <h4>🏅 JCI Accredited</h4>
+                    <p>International healthcare quality standards</p>
+                </div>
+                <div class="accreditation-badge">
+                    <h4>✓ NABH Certified</h4>
+                    <p>National Accreditation Board for Hospitals</p>
+                </div>
+                <div class="accreditation-badge">
+                    <h4>📋 ISO 9001:2015</h4>
+                    <p>Quality Management System Certified</p>
+                </div>
+                <div class="accreditation-badge">
+                    <h4>🔒 HIPAA Compliant</h4>
+                    <p>Patient data privacy protection</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hospital Achievements -->
+        <h3>🏆 Our Achievements & Milestones</h3>
+        <div class="about-content">
+            <div class="about-card">
+                <h3>100K+</h3>
+                <p>Patients Treated Annually</p>
+            </div>
+            <div class="about-card">
+                <h3>99.9%</h3>
+                <p>System Uptime</p>
+            </div>
+            <div class="about-card">
+                <h3>95%+</h3>
+                <p>Patient Satisfaction</p>
+            </div>
+            <div class="about-card">
+                <h3>24/7</h3>
+                <p>Emergency Services</p>
+            </div>
+        </div>
+
+        <!-- Why Choose Us -->
+        <h3>💡 Why Choose QuickHealth?</h3>
+        <div style="background: var(--bg-secondary); padding: 2.5rem; border-radius: 12px; border: 1px solid var(--border);">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div>
+                    <h4 style="color: var(--accent-primary); margin-bottom: 0.5rem;">✓ Expert Medical Team</h4>
+                    <p style="color: var(--text-secondary);">150+ highly qualified and experienced specialist doctors across all departments</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent-primary); margin-bottom: 0.5rem;">✓ Advanced Technology</h4>
+                    <p style="color: var(--text-secondary);">State-of-the-art medical equipment and automated systems for accurate diagnosis and treatment</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent-primary); margin-bottom: 0.5rem;">✓ Patient-Centric Care</h4>
+                    <p style="color: var(--text-secondary);">Personalized treatment plans and compassionate care focused on patient recovery</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent-primary); margin-bottom: 0.5rem;">✓ Efficient Operations</h4>
+                    <p style="color: var(--text-secondary);">Automated workflows reduce wait times and streamline discharge processes</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent-primary); margin-bottom: 0.5rem;">✓ Affordable Healthcare</h4>
+                    <p style="color: var(--text-secondary);">Transparent pricing and insurance partnerships for accessible healthcare</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent-primary); margin-bottom: 0.5rem;">✓ 24/7 Support</h4>
+                    <p style="color: var(--text-secondary);">Emergency services and patient support available round the clock</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+

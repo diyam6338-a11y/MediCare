@@ -1,0 +1,2508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickHealth - Healthcare Made Easy</title>
+    <style>
+        :root {
+            --color-primary: #2563eb;
+            --color-primary-hover: #1d4ed8;
+            --color-secondary: #10b981;
+            --color-background: #f8fafc;
+            --color-surface: #ffffff;
+            --color-text: #1e293b;
+            --color-text-secondary: #64748b;
+            --color-border: #e2e8f0;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: var(--color-surface);
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .features {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--color-text);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--color-surface);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.75rem;
+            color: var(--color-text);
+            font-size: 1.25rem;
+        }
+
+        .feature-card p {
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        .services {
+            background: var(--color-surface);
+            padding: 4rem 2rem;
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .services h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-item {
+            background: var(--color-background);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .service-item h4 {
+            margin-bottom: 0.5rem;
+            color: var(--color-primary);
+        }
+
+        .footer {
+            background: var(--color-text);
+            color: white;
+            padding: 3rem 2rem 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .feature-grid, .service-list {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                padding: 1rem 0.75rem;
+            }
+
+            .nav-container {
+                padding: 0 0.5rem;
+                flex-wrap: wrap;
+            }
+
+            .hero {
+                padding: 2.5rem 1.25rem;
+            }
+
+            .features, .services {
+                padding: 2rem 1rem;
+                margin: 0;
+            }
+
+            .features h2, .services h2 {
+                font-size: 1.75rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .feature-card, .service-item {
+                padding: 1.5rem;
+            }
+
+            .login-form {
+                width: 95% !important;
+                padding: 1.5rem 1rem !important;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                overflow-x: hidden;
+                max-width: 100vw;
+            }
+
+            .navbar {
+                padding: 0.75rem 0.5rem;
+                width: 100vw;
+            }
+
+            .nav-container {
+                padding: 0 0.25rem;
+                gap: 0.5rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+                font-size: 0.8rem;
+            }
+
+            .nav-links a {
+                padding: 0.25rem;
+                font-weight: 400;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+                width: 100vw;
+            }
+
+            .hero h1 {
+                font-size: 1.4rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 0.75rem;
+                padding: 0 0.5rem;
+            }
+
+            .btn {
+                width: 100% !important;
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+                white-space: normal;
+            }
+
+            .features {
+                padding: 1.5rem 0.75rem;
+                width: 100vw;
+            }
+
+            .features h2 {
+                font-size: 1.4rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .feature-grid {
+                gap: 1rem;
+            }
+
+            .feature-card {
+                padding: 1.25rem 1rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .feature-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .services {
+                padding: 1.5rem 0.75rem;
+                width: 100vw;
+            }
+
+            .services-container {
+                width: 100%;
+            }
+
+            .services h2 {
+                font-size: 1.4rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .service-list {
+                gap: 0.75rem;
+            }
+
+            .service-item {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .service-item h4 {
+                font-size: 0.95rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .service-item p {
+                font-size: 0.85rem;
+            }
+
+            .footer {
+                padding: 1.5rem 0.75rem 0.75rem;
+                width: 100vw;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .footer-section h3 {
+                font-size: 1rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .footer-section ul li {
+                margin-bottom: 0.3rem;
+                font-size: 0.85rem;
+            }
+
+            .login-form {
+                width: 100% !important;
+                padding: 1rem 0.75rem !important;
+                margin: 0.5rem 0 !important;
+                max-width: 100%;
+            }
+
+            .form-input {
+                padding: 0.6rem 0.75rem;
+                font-size: 0.95rem;
+            }
+
+            .btn-primary, .btn-secondary {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span>⚕️</span>
+                <span>QuickHealth</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#login-selector">Login</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Healthcare Made Easy</h1>
+        <p>Access quality healthcare from the comfort of your home. Connect with certified doctors instantly.</p>
+        <div class="cta-buttons">
+            <a href="#appointment" class="btn btn-primary">Book Appointment</a>
+            <a href="#login-selector" class="btn btn-secondary">Login Portal</a>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2>Why Choose QuickHealth?</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Easy Access</h3>
+                <p>Book appointments and consult doctors from anywhere, anytime through our intuitive platform.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👨‍⚕️</div>
+                <h3>Certified Doctors</h3>
+                <p>Connect with experienced and verified healthcare professionals across multiple specialties.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure & Private</h3>
+                <p>Your health data is protected with end-to-end encryption and strict privacy policies.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💊</div>
+                <h3>E-Prescriptions</h3>
+                <p>Receive digital prescriptions instantly and order medicines online with ease.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Health Records</h3>
+                <p>Maintain complete medical history and track your health progress over time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Quick Response</h3>
+                <p>Get connected to doctors within minutes for urgent consultations and emergency advice.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <div class="services-container">
+            <h2>Our Services</h2>
+            <div class="service-list">
+                <div class="service-item">
+                    <h4>General Consultation</h4>
+                    <p>24/7 access to general physicians</p>
+                </div>
+                <div class="service-item">
+                    <h4>Specialist Care</h4>
+                    <p>Consult with specialists across various fields</p>
+                </div>
+                <div class="service-item">
+                    <h4>Mental Health</h4>
+                    <p>Counseling and psychiatric support</p>
+                </div>
+                <div class="service-item">
+                    <h4>Lab Tests</h4>
+                    <p>Book diagnostic tests at home</p>
+                </div>
+                <div class="service-item">
+                    <h4>Medicine Delivery</h4>
+                    <p>Order medicines online with fast delivery</p>
+                </div>
+                <div class="service-item">
+                    <h4>Health Packages</h4>
+                    <p>Comprehensive health checkup plans</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>QuickHealth</h3>
+                <p>Making healthcare accessible to everyone, everywhere.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#doctor">Doctor Portal</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#help">Help Center</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li>Email: support@quickhealth.com</li>
+                    <li>Phone: +91 1800-XXX-XXXX</li>
+                    <li>24/7 Emergency: 108</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 QuickHealth. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Login Selector Section -->
+    <section class="login-selector-section" id="login-selector" style="display: none;">
+        <div class="login-selector-container">
+            <button class="back-btn" onclick="showHome()">← Back to Home</button>
+            <h2 style="text-align: center; margin: 2rem 0;">Select Your Role</h2>
+            <div class="role-grid">
+                <div class="role-card" onclick="showPortal('doctor')">
+                    <div class="role-icon">👨‍⚕️</div>
+                    <h3>Doctor</h3>
+                    <p>Access patient records and manage appointments</p>
+                </div>
+                <div class="role-card" onclick="showPortal('nurse')">
+                    <div class="role-icon">👩‍⚕️</div>
+                    <h3>Nurse</h3>
+                    <p>Monitor patients and update care records</p>
+                </div>
+                <div class="role-card" onclick="showPortal('patient')">
+                    <div class="role-icon">🧑‍🦰</div>
+                    <h3>Patient</h3>
+                    <p>Book appointments and view health records</p>
+                </div>
+                <div class="role-card" onclick="showPortal('staff')">
+                    <div class="role-icon">👔</div>
+                    <h3>Staff Member</h3>
+                    <p>Manage hospital operations and resources</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctor Portal Section -->
+    <section class="doctor-portal portal-section" id="doctor" style="display: none;">
+        <div class="portal-container">
+            <div class="portal-header">
+                <button class="back-btn" onclick="showHome()">← Back to Home</button>
+                <h2>Doctor Portal</h2>
+            </div>
+            
+            <div class="portal-tabs">
+                <button class="tab-btn active" onclick="showTab('login')">Login</button>
+                <button class="tab-btn" onclick="showTab('dashboard')">Dashboard</button>
+                <button class="tab-btn" onclick="showTab('patients')">Patients</button>
+                <button class="tab-btn" onclick="showTab('appointments')">Appointments</button>
+            </div>
+
+            <!-- Login Tab -->
+            <div class="tab-content" id="login-tab">
+                <div class="login-form">
+                    <h3>Doctor Login</h3>
+                    <form onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label for="doctor-id">Doctor ID</label>
+                            <input type="text" id="doctor-id" class="form-input" placeholder="Enter your doctor ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" class="form-input" placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                    </form>
+                    <p style="margin-top: 1rem; text-align: center; color: var(--color-text-secondary);">
+                        Don't have an account? <a href="#register" style="color: var(--color-primary);">Register</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div class="tab-content" id="dashboard-tab" style="display: none;">
+                <h3 style="margin-bottom: 1.5rem;">Hospital Workflow Management</h3>
+                
+                <!-- Discharge Management Section -->
+                <div class="workflow-section">
+                    <h4>🏥 Automated Discharge Management</h4>
+                    <div class="discharge-grid">
+                        <div class="chart-container">
+                            <canvas id="dischargeStatusChart"></canvas>
+                            <p class="chart-label">Discharge Status Overview</p>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="workflowEfficiencyChart"></canvas>
+                            <p class="chart-label">Workflow Efficiency</p>
+                        </div>
+                    </div>
+                    <div class="ready-discharge-list">
+                        <h5>Patients Ready for Discharge</h5>
+                        <div class="discharge-items">
+                            <div class="discharge-item urgent">
+                                <span class="patient-name">John Doe (#1234)</span>
+                                <span class="discharge-time">Ready since: 2 hours ago</span>
+                                <button class="btn-sm btn-primary">Process Discharge</button>
+                            </div>
+                            <div class="discharge-item normal">
+                                <span class="patient-name">Sarah Williams (#1235)</span>
+                                <span class="discharge-time">Ready since: 30 mins ago</span>
+                                <button class="btn-sm btn-primary">Process Discharge</button>
+                            </div>
+                            <div class="discharge-item normal">
+                                <span class="patient-name">Michael Brown (#1236)</span>
+                                <span class="discharge-time">Pending final approval</span>
+                                <button class="btn-sm btn-secondary">Review</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource Availability Section -->
+                <div class="workflow-section">
+                    <h4>🏨 Real-Time Resource Availability</h4>
+                    <div class="resource-grid">
+                        <div class="resource-card available">
+                            <div class="resource-icon">🛏️</div>
+                            <div class="resource-info">
+                                <h5>Beds Available</h5>
+                                <p class="resource-count">23 / 150</p>
+                                <div class="resource-bar">
+                                    <div class="resource-bar-fill" style="width: 15%; background: #10b981;"></div>
+                                </div>
+                                <span class="resource-detail">ICU: 5 | General: 18</span>
+                            </div>
+                        </div>
+                        <div class="resource-card busy">
+                            <div class="resource-icon">👨‍⚕️</div>
+                            <div class="resource-info">
+                                <h5>Doctors On-Duty</h5>
+                                <p class="resource-count">18 / 25</p>
+                                <div class="resource-bar">
+                                    <div class="resource-bar-fill" style="width: 72%; background: #f59e0b;"></div>
+                                </div>
+                                <span class="resource-detail">Available: 7 doctors</span>
+                            </div>
+                        </div>
+                        <div class="resource-card available">
+                            <div class="resource-icon">👩‍⚕️</div>
+                            <div class="resource-info">
+                                <h5>Nurses On-Duty</h5>
+                                <p class="resource-count">42 / 60</p>
+                                <div class="resource-bar">
+                                    <div class="resource-bar-fill" style="width: 70%; background: #f59e0b;"></div>
+                                </div>
+                                <span class="resource-detail">Available: 18 nurses</span>
+                            </div>
+                        </div>
+                        <div class="resource-card available">
+                            <div class="resource-icon">🚑</div>
+                            <div class="resource-info">
+                                <h5>Ambulances</h5>
+                                <p class="resource-count">6 / 10</p>
+                                <div class="resource-bar">
+                                    <div class="resource-bar-fill" style="width: 60%; background: #10b981;"></div>
+                                </div>
+                                <span class="resource-detail">4 available nearby</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Department Allocation -->
+                <div class="workflow-section">
+                    <h4>🏢 Department Allocation & Load</h4>
+                    <div class="department-charts">
+                        <div class="chart-container">
+                            <canvas id="departmentLoadChart"></canvas>
+                            <p class="chart-label">Current Department Load</p>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="queueStatusChart"></canvas>
+                            <p class="chart-label">Queue Status by Department</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nearby Hospitals -->
+                <div class="workflow-section">
+                    <h4>🏥 Nearby Hospitals with Available Services</h4>
+                    <div class="hospital-list">
+                        <div class="hospital-card">
+                            <div class="hospital-header">
+                                <h5>City General Hospital</h5>
+                                <span class="distance">2.5 km away</span>
+                            </div>
+                            <div class="hospital-services">
+                                <span class="service-badge available">ICU: 8 beds</span>
+                                <span class="service-badge available">Emergency: Open</span>
+                                <span class="service-badge unavailable">Cardiology: Full</span>
+                            </div>
+                            <button class="btn-sm btn-primary">Refer Patient</button>
+                        </div>
+                        <div class="hospital-card">
+                            <div class="hospital-header">
+                                <h5>Metro Medical Center</h5>
+                                <span class="distance">4.1 km away</span>
+                            </div>
+                            <div class="hospital-services">
+                                <span class="service-badge available">ICU: 3 beds</span>
+                                <span class="service-badge available">Neurology: Open</span>
+                                <span class="service-badge available">Ambulance: 2</span>
+                            </div>
+                            <button class="btn-sm btn-primary">Refer Patient</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);">👥</div>
+                        <div class="stat-info">
+                            <h4>Total Patients</h4>
+                            <p class="stat-number">248</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">📅</div>
+                        <div class="stat-info">
+                            <h4>Today's Appointments</h4>
+                            <p class="stat-number">12</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">⏰</div>
+                        <div class="stat-info">
+                            <h4>Pending Reviews</h4>
+                            <p class="stat-number">5</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">⭐</div>
+                        <div class="stat-info">
+                            <h4>Rating</h4>
+                            <p class="stat-number">4.8</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <span class="activity-time">10:30 AM</span>
+                            <span class="activity-desc">Completed consultation with Patient #1234</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-time">09:15 AM</span>
+                            <span class="activity-desc">Prescribed medication for Patient #1235</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-time">08:45 AM</span>
+                            <span class="activity-desc">Updated patient record #1236</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patients Tab -->
+            <div class="tab-content" id="patients-tab" style="display: none;">
+                <div class="search-bar">
+                    <input type="text" class="form-input" placeholder="Search patients...">
+                </div>
+                <div class="patients-list">
+                    <div class="patient-card">
+                        <div class="patient-info">
+                            <h4>John Doe</h4>
+                            <p>Age: 45 | ID: #1234</p>
+                            <p>Last Visit: Nov 20, 2025</p>
+                        </div>
+                        <button class="btn btn-primary btn-sm">View Details</button>
+                    </div>
+                    <div class="patient-card">
+                        <div class="patient-info">
+                            <h4>Jane Smith</h4>
+                            <p>Age: 32 | ID: #1235</p>
+                            <p>Last Visit: Nov 19, 2025</p>
+                        </div>
+                        <button class="btn btn-primary btn-sm">View Details</button>
+                    </div>
+                    <div class="patient-card">
+                        <div class="patient-info">
+                            <h4>Robert Johnson</h4>
+                            <p>Age: 58 | ID: #1236</p>
+                            <p>Last Visit: Nov 18, 2025</p>
+                        </div>
+                        <button class="btn btn-primary btn-sm">View Details</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appointments Tab -->
+            <div class="tab-content" id="appointments-tab" style="display: none;">
+                <div class="appointments-header">
+                    <h3>Today's Appointments</h3>
+                    <button class="btn btn-secondary btn-sm">Add New</button>
+                </div>
+                <div class="appointments-list">
+                    <div class="appointment-card">
+                        <div class="appointment-time">
+                            <span class="time">10:00 AM</span>
+                            <span class="duration">30 min</span>
+                        </div>
+                        <div class="appointment-details">
+                            <h4>Sarah Williams</h4>
+                            <p>General Checkup</p>
+                            <span class="status-badge status-confirmed">Confirmed</span>
+                        </div>
+                        <button class="btn btn-primary btn-sm">Start Consultation</button>
+                    </div>
+                    <div class="appointment-card">
+                        <div class="appointment-time">
+                            <span class="time">11:00 AM</span>
+                            <span class="duration">45 min</span>
+                        </div>
+                        <div class="appointment-details">
+                            <h4>Michael Brown</h4>
+                            <p>Follow-up Visit</p>
+                            <span class="status-badge status-pending">Pending</span>
+                        </div>
+                        <button class="btn btn-primary btn-sm">Start Consultation</button>
+                    </div>
+                    <div class="appointment-card">
+                        <div class="appointment-time">
+                            <span class="time">02:00 PM</span>
+                            <span class="duration">30 min</span>
+                        </div>
+                        <div class="appointment-details">
+                            <h4>Emily Davis</h4>
+                            <p>New Patient Consultation</p>
+                            <span class="status-badge status-confirmed">Confirmed</span>
+                        </div>
+                        <button class="btn btn-primary btn-sm">Start Consultation</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nurse Portal -->
+    <section class="portal-section" id="nurse" style="display: none;">
+        <div class="portal-container">
+            <div class="portal-header">
+                <button class="back-btn" onclick="showLoginSelector()">← Back</button>
+                <h2>Nurse Portal</h2>
+            </div>
+            
+            <div class="portal-tabs">
+                <button class="tab-btn active" onclick="showNurseTab('nurse-login')">Login</button>
+                <button class="tab-btn" onclick="showNurseTab('nurse-dashboard')">Dashboard</button>
+                <button class="tab-btn" onclick="showNurseTab('nurse-patients')">Patient Care</button>
+            </div>
+
+            <!-- Nurse Login Tab -->
+            <div class="tab-content" id="nurse-login-tab">
+                <div class="login-form">
+                    <h3>Nurse Login</h3>
+                    <form onsubmit="handleNurseLogin(event)">
+                        <div class="form-group">
+                            <label for="nurse-id">Nurse ID</label>
+                            <input type="text" id="nurse-id" class="form-input" placeholder="Enter your nurse ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nurse-password">Password</label>
+                            <input type="password" id="nurse-password" class="form-input" placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Nurse Dashboard Tab -->
+            <div class="tab-content" id="nurse-dashboard-tab" style="display: none;">
+                <h3 style="margin-bottom: 1.5rem;">Patient Monitoring & Care</h3>
+                
+                <div class="workflow-section">
+                    <h4>👩‍⚕️ Current Ward Assignments</h4>
+                    <div class="resource-grid">
+                        <div class="resource-card available">
+                            <div class="resource-icon">🛏️</div>
+                            <div class="resource-info">
+                                <h5>Ward A - General</h5>
+                                <p class="resource-count">12 Patients</p>
+                                <span class="resource-detail">All vitals stable</span>
+                            </div>
+                        </div>
+                        <div class="resource-card busy">
+                            <div class="resource-icon">🏥</div>
+                            <div class="resource-info">
+                                <h5>ICU Unit</h5>
+                                <p class="resource-count">5 Patients</p>
+                                <span class="resource-detail">2 critical monitoring</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workflow-section">
+                    <h4>📋 Today's Tasks</h4>
+                    <div class="discharge-items">
+                        <div class="discharge-item normal">
+                            <span class="patient-name">Medication Round - Ward A</span>
+                            <span class="discharge-time">Due: 2:00 PM</span>
+                            <button class="btn-sm btn-primary">Mark Complete</button>
+                        </div>
+                        <div class="discharge-item urgent">
+                            <span class="patient-name">Vitals Check - ICU</span>
+                            <span class="discharge-time">Overdue: 15 mins</span>
+                            <button class="btn-sm btn-primary">Complete Now</button>
+                        </div>
+                        <div class="discharge-item normal">
+                            <span class="patient-name">Patient Discharge - Room 204</span>
+                            <span class="discharge-time">Scheduled: 4:30 PM</span>
+                            <button class="btn-sm btn-secondary">Prepare</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);">👥</div>
+                        <div class="stat-info">
+                            <h4>Patients Assigned</h4>
+                            <p class="stat-number">17</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">⚠️</div>
+                        <div class="stat-info">
+                            <h4>Urgent Tasks</h4>
+                            <p class="stat-number">3</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">✅</div>
+                        <div class="stat-info">
+                            <h4>Tasks Completed</h4>
+                            <p class="stat-number">8</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nurse Patient Care Tab -->
+            <div class="tab-content" id="nurse-patients-tab" style="display: none;">
+                <div class="search-bar">
+                    <input type="text" class="form-input" placeholder="Search patients by name or room number...">
+                </div>
+                <div class="patients-list">
+                    <div class="patient-card">
+                        <div class="patient-info">
+                            <h4>John Doe - Room 204</h4>
+                            <p>Post-surgery recovery | Vitals: Stable</p>
+                            <p>Last check: 1 hour ago</p>
+                        </div>
+                        <button class="btn btn-primary btn-sm">Update Record</button>
+                    </div>
+                    <div class="patient-card">
+                        <div class="patient-info">
+                            <h4>Mary Johnson - ICU 3</h4>
+                            <p>Critical monitoring | Vitals: Monitoring required</p>
+                            <p>Last check: 15 mins ago</p>
+                        </div>
+                        <button class="btn btn-primary btn-sm">Update Record</button>
+                    </div>
+                    <div class="patient-card">
+                        <div class="patient-info">
+                            <h4>Robert Wilson - Room 305</h4>
+                            <p>Diabetic care | Vitals: Stable</p>
+                            <p>Last check: 45 mins ago</p>
+                        </div>
+                        <button class="btn btn-primary btn-sm">Update Record</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Patient Portal -->
+    <section class="portal-section" id="patient" style="display: none;">
+        <div class="portal-container">
+            <div class="portal-header">
+                <button class="back-btn" onclick="showLoginSelector()">← Back</button>
+                <h2>Patient Portal</h2>
+            </div>
+            
+            <div class="portal-tabs">
+                <button class="tab-btn active" onclick="showPatientTab('patient-login')">Login</button>
+                <button class="tab-btn" onclick="showPatientTab('patient-dashboard')">My Health</button>
+                <button class="tab-btn" onclick="showPatientTab('patient-appointments')">Appointments</button>
+                <button class="tab-btn" onclick="showPatientTab('patient-queue')">Queue Status</button>
+            </div>
+
+            <!-- Patient Login Tab -->
+            <div class="tab-content" id="patient-login-tab">
+                <div class="login-form">
+                    <h3>Patient Login</h3>
+                    <form onsubmit="handlePatientLogin(event)">
+                        <div class="form-group">
+                            <label for="patient-id">Patient ID / Mobile</label>
+                            <input type="text" id="patient-id" class="form-input" placeholder="Enter your patient ID or mobile number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-password">Password</label>
+                            <input type="password" id="patient-password" class="form-input" placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                    </form>
+                    <p style="margin-top: 1rem; text-align: center; color: var(--color-text-secondary);">
+                        New patient? <a href="#register" style="color: var(--color-primary);">Register here</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Patient Dashboard Tab -->
+            <div class="tab-content" id="patient-dashboard-tab" style="display: none;">
+                <h3 style="margin-bottom: 1.5rem;">My Health Dashboard</h3>
+                
+                <div class="workflow-section">
+                    <h4>📊 Health Overview</h4>
+                    <div class="dashboard-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">❤️</div>
+                            <div class="stat-info">
+                                <h4>Heart Rate</h4>
+                                <p class="stat-number">72 bpm</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">🩺</div>
+                            <div class="stat-info">
+                                <h4>Blood Pressure</h4>
+                                <p class="stat-number">120/80</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);">🌡️</div>
+                            <div class="stat-info">
+                                <h4>Temperature</h4>
+                                <p class="stat-number">98.6°F</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">⚖️</div>
+                            <div class="stat-info">
+                                <h4>Weight</h4>
+                                <p class="stat-number">70 kg</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workflow-section">
+                    <h4>💊 Current Medications</h4>
+                    <div class="discharge-items">
+                        <div class="discharge-item normal">
+                            <span class="patient-name">Aspirin 100mg</span>
+                            <span class="discharge-time">Daily - Morning</span>
+                            <button class="btn-sm btn-secondary">View Details</button>
+                        </div>
+                        <div class="discharge-item normal">
+                            <span class="patient-name">Metformin 500mg</span>
+                            <span class="discharge-time">Twice daily - Before meals</span>
+                            <button class="btn-sm btn-secondary">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workflow-section">
+                    <h4>📋 Recent Lab Results</h4>
+                    <div class="hospital-list">
+                        <div class="hospital-card">
+                            <div class="hospital-header">
+                                <h5>Blood Test - Complete Panel</h5>
+                                <span class="distance">Nov 18, 2025</span>
+                            </div>
+                            <div class="hospital-services">
+                                <span class="service-badge available">All Normal</span>
+                            </div>
+                            <button class="btn-sm btn-primary">Download Report</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patient Appointments Tab -->
+            <div class="tab-content" id="patient-appointments-tab" style="display: none;">
+                <div class="appointments-header">
+                    <h3>My Appointments</h3>
+                    <button class="btn btn-secondary btn-sm">Book New</button>
+                </div>
+                <div class="appointments-list">
+                    <div class="appointment-card">
+                        <div class="appointment-time">
+                            <span class="time">Nov 22</span>
+                            <span class="duration">10:00 AM</span>
+                        </div>
+                        <div class="appointment-details">
+                            <h4>Dr. Sarah Williams - Cardiology</h4>
+                            <p>Regular Checkup</p>
+                            <span class="status-badge status-confirmed">Confirmed</span>
+                        </div>
+                        <button class="btn btn-secondary btn-sm">Reschedule</button>
+                    </div>
+                    <div class="appointment-card">
+                        <div class="appointment-time">
+                            <span class="time">Nov 25</span>
+                            <span class="duration">02:30 PM</span>
+                        </div>
+                        <div class="appointment-details">
+                            <h4>Dr. Michael Brown - General Medicine</h4>
+                            <p>Follow-up Consultation</p>
+                            <span class="status-badge status-pending">Pending Confirmation</span>
+                        </div>
+                        <button class="btn btn-secondary btn-sm">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patient Queue Status Tab -->
+            <div class="tab-content" id="patient-queue-tab" style="display: none;">
+                <h3 style="margin-bottom: 1.5rem;">🔔 Real-Time Queue Status</h3>
+                
+                <div class="workflow-section">
+                    <h4>Your Current Position</h4>
+                    <div class="discharge-item normal" style="font-size: 1.25rem; padding: 2rem;">
+                        <div>
+                            <span class="patient-name" style="font-size: 1.5rem;">Position: #3</span>
+                            <span class="discharge-time" style="display: block; margin-top: 0.5rem;">Estimated wait: 15 minutes</span>
+                        </div>
+                        <button class="btn-sm btn-primary">Get Notification</button>
+                    </div>
+                </div>
+
+                <div class="workflow-section">
+                    <h4>Department Queue Status</h4>
+                    <div class="hospital-list">
+                        <div class="hospital-card">
+                            <div class="hospital-header">
+                                <h5>Emergency Department</h5>
+                                <span class="distance">12 patients waiting</span>
+                            </div>
+                            <div class="hospital-services">
+                                <span class="service-badge unavailable">High Wait Time: ~45 mins</span>
+                            </div>
+                        </div>
+                        <div class="hospital-card">
+                            <div class="hospital-header">
+                                <h5>Cardiology</h5>
+                                <span class="distance">3 patients waiting</span>
+                            </div>
+                            <div class="hospital-services">
+                                <span class="service-badge available">Low Wait Time: ~15 mins</span>
+                            </div>
+                        </div>
+                        <div class="hospital-card">
+                            <div class="hospital-header">
+                                <h5>General Medicine</h5>
+                                <span class="distance">8 patients waiting</span>
+                            </div>
+                            <div class="hospital-services">
+                                <span class="service-badge available">Moderate Wait: ~30 mins</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Staff Portal -->
+    <section class="portal-section" id="staff" style="display: none;">
+        <div class="portal-container">
+            <div class="portal-header">
+                <button class="back-btn" onclick="showLoginSelector()">← Back</button>
+                <h2>Staff Member Portal</h2>
+            </div>
+            
+            <div class="portal-tabs">
+                <button class="tab-btn active" onclick="showStaffTab('staff-login')">Login</button>
+                <button class="tab-btn" onclick="showStaffTab('staff-dashboard')">Operations</button>
+                <button class="tab-btn" onclick="showStaffTab('staff-resources')">Resources</button>
+                <button class="tab-btn" onclick="showStaffTab('staff-discharge')">Discharge Management</button>
+            </div>
+
+            <!-- Staff Login Tab -->
+            <div class="tab-content" id="staff-login-tab">
+                <div class="login-form">
+                    <h3>Staff Login</h3>
+                    <form onsubmit="handleStaffLogin(event)">
+                        <div class="form-group">
+                            <label for="staff-id">Staff ID</label>
+                            <input type="text" id="staff-id" class="form-input" placeholder="Enter your staff ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="staff-password">Password</label>
+                            <input type="password" id="staff-password" class="form-input" placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Staff Dashboard Tab -->
+            <div class="tab-content" id="staff-dashboard-tab" style="display: none;">
+                <h3 style="margin-bottom: 1.5rem;">Hospital Operations Dashboard</h3>
+                
+                <div class="workflow-section">
+                    <h4>🏥 Today's Operations Summary</h4>
+                    <div class="dashboard-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);">📊</div>
+                            <div class="stat-info">
+                                <h4>Total Admissions</h4>
+                                <p class="stat-number">42</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">🏠</div>
+                            <div class="stat-info">
+                                <h4>Discharges</h4>
+                                <p class="stat-number">28</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">⏰</div>
+                            <div class="stat-info">
+                                <h4>Pending Tasks</h4>
+                                <p class="stat-number">15</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">🚑</div>
+                            <div class="stat-info">
+                                <h4>Emergency Cases</h4>
+                                <p class="stat-number">7</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workflow-section">
+                    <h4>📋 Department Coordination</h4>
+                    <div class="chart-container">
+                        <canvas id="staffDepartmentChart"></canvas>
+                        <p class="chart-label">Current Department Occupancy</p>
+                    </div>
+                </div>
+
+                <div class="workflow-section">
+                    <h4>⚠️ Priority Alerts</h4>
+                    <div class="discharge-items">
+                        <div class="discharge-item urgent">
+                            <span class="patient-name">ICU Bed Request - Emergency</span>
+                            <span class="discharge-time">2 minutes ago</span>
+                            <button class="btn-sm btn-primary">Respond</button>
+                        </div>
+                        <div class="discharge-item normal">
+                            <span class="patient-name">Equipment Maintenance - Ward B</span>
+                            <span class="discharge-time">15 minutes ago</span>
+                            <button class="btn-sm btn-secondary">Schedule</button>
+                        </div>
+                        <div class="discharge-item normal">
+                            <span class="patient-name">Supply Restocking - Pharmacy</span>
+                            <span class="discharge-time">1 hour ago</span>
+                            <button class="btn-sm btn-secondary">Review</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Staff Resources Tab -->
+            <div class="tab-content" id="staff-resources-tab" style="display: none;">
+                <h3 style="margin-bottom: 1.5rem;">Resource Management</h3>
+                
+                <div class="workflow-section">
+                    <h4>🏨 Bed Availability Management</h4>
+                    <div class="resource-grid">
+                        <div class="resource-card available">
+                            <div class="resource-icon">🛏️</div>
+                            <div class="resource-info">
+                                <h5>General Ward Beds</h5>
+                                <p class="resource-count">18 / 100</p>
+                                <div class="resource-bar">
+                                    <div class="resource-bar-fill" style="width: 18%; background: #10b981;"></div>
+                                </div>
+                                <span class="resource-detail">82 beds available</span>
+                            </div>
+                        </div>
+                        <div class="resource-card busy">
+                            <div class="resource-icon">🏥</div>
+                            <div class="resource-info">
+                                <h5>ICU Beds</h5>
+                                <p class="resource-count">18 / 20</p>
+                                <div class="resource-bar">
+                                    <div class="resource-bar-fill" style="width: 90%; background: #ef4444;"></div>
+                                </div>
+                                <span class="resource-detail">Only 2 beds available</span>
+                            </div>
+                        </div>
+                        <div class="resource-card available">
+                            <div class="resource-icon">🚑</div>
+                            <div class="resource-info">
+                                <h5>Ambulances</h5>
+                                <p class="resource-count">6 / 10</p>
+                                <div class="resource-bar">
+                                    <div class="resource-bar-fill" style="width: 60%; background: #10b981;"></div>
+                                </div>
+                                <span class="resource-detail">4 available, 2 nearby</span>
+                            </div>
+                        </div>
+                        <div class="resource-card available">
+                            <div class="resource-icon">👨‍⚕️</div>
+                            <div class="resource-info">
+                                <h5>Medical Staff On-Duty</h5>
+                                <p class="resource-count">60 / 85</p>
+                                <div class="resource-bar">
+                                    <div class="resource-bar-fill" style="width: 70%; background: #f59e0b;"></div>
+                                </div>
+                                <span class="resource-detail">25 available for assignment</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workflow-section">
+                    <h4>🏢 Nearby Hospitals - Transfer Network</h4>
+                    <div class="hospital-list">
+                        <div class="hospital-card">
+                            <div class="hospital-header">
+                                <h5>City General Hospital</h5>
+                                <span class="distance">2.5 km away</span>
+                            </div>
+                            <div class="hospital-services">
+                                <span class="service-badge available">ICU: 8 beds</span>
+                                <span class="service-badge available">Emergency: Open</span>
+                                <span class="service-badge available">Ambulance: 3</span>
+                            </div>
+                            <button class="btn-sm btn-primary">Initiate Transfer</button>
+                        </div>
+                        <div class="hospital-card">
+                            <div class="hospital-header">
+                                <h5>Metro Medical Center</h5>
+                                <span class="distance">4.1 km away</span>
+                            </div>
+                            <div class="hospital-services">
+                                <span class="service-badge available">ICU: 3 beds</span>
+                                <span class="service-badge available">Neurology: Open</span>
+                                <span class="service-badge unavailable">Cardiology: Full</span>
+                            </div>
+                            <button class="btn-sm btn-primary">Initiate Transfer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Staff Discharge Management Tab -->
+            <div class="tab-content" id="staff-discharge-tab" style="display: none;">
+                <h3 style="margin-bottom: 1.5rem;">🏠 Discharge Workflow Automation</h3>
+                
+                <div class="workflow-section">
+                    <h4>Discharge Pipeline Status</h4>
+                    <div class="chart-container">
+                        <canvas id="staffDischargeChart"></canvas>
+                        <p class="chart-label">Discharge Status Distribution</p>
+                    </div>
+                </div>
+
+                <div class="workflow-section">
+                    <h4>Patients Ready for Discharge (Automated Detection)</h4>
+                    <div class="discharge-items">
+                        <div class="discharge-item urgent">
+                            <div>
+                                <span class="patient-name">John Doe - Room 204</span>
+                                <span class="discharge-time" style="display: block; margin-top: 0.25rem;">All criteria met: Medical clearance ✓, Bills cleared ✓, Transport arranged ✓</span>
+                                <span class="discharge-time" style="display: block;">Ready since: 2 hours ago</span>
+                            </div>
+                            <button class="btn-sm btn-primary">Process Discharge</button>
+                        </div>
+                        <div class="discharge-item normal">
+                            <div>
+                                <span class="patient-name">Sarah Williams - Room 305</span>
+                                <span class="discharge-time" style="display: block; margin-top: 0.25rem;">All criteria met: Medical clearance ✓, Bills cleared ✓, Transport pending ⏳</span>
+                                <span class="discharge-time" style="display: block;">Ready since: 45 minutes ago</span>
+                            </div>
+                            <button class="btn-sm btn-secondary">Arrange Transport</button>
+                        </div>
+                        <div class="discharge-item normal">
+                            <div>
+                                <span class="patient-name">Michael Brown - ICU 2</span>
+                                <span class="discharge-time" style="display: block; margin-top: 0.25rem;">Partial: Medical clearance ✓, Bills pending ⏳, Transport arranged ✓</span>
+                                <span class="discharge-time" style="display: block;">Estimated ready: 2-3 hours</span>
+                            </div>
+                            <button class="btn-sm btn-secondary">Review Bills</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workflow-section">
+                    <h4>📊 Weekly Discharge Efficiency</h4>
+                    <div class="chart-container">
+                        <canvas id="staffWorkflowChart"></canvas>
+                        <p class="chart-label">Discharges Processed Per Day</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .login-selector-section {
+            min-height: 100vh;
+            background: var(--color-background);
+            padding: 2rem;
+        }
+
+        .login-selector-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .role-card {
+            background: var(--color-surface);
+            padding: 2.5rem;
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid var(--color-border);
+            box-shadow: var(--shadow-md);
+        }
+
+        .role-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-primary);
+        }
+
+        .role-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .role-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .role-card p {
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .portal-section {
+            min-height: 100vh;
+            background: var(--color-background);
+            padding: 2rem;
+        }
+
+        .workflow-section {
+            background: var(--color-surface);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .workflow-section h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            color: var(--color-text);
+        }
+
+        .workflow-section h5 {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: var(--color-text);
+        }
+
+        .discharge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-container {
+            background: var(--color-background);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+        }
+
+        .chart-label {
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .ready-discharge-list {
+            background: var(--color-background);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+        }
+
+        .discharge-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .discharge-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--color-surface);
+            border-radius: 8px;
+            border-left: 4px solid var(--color-secondary);
+        }
+
+        .discharge-item.urgent {
+            border-left-color: #ef4444;
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .discharge-item .patient-name {
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .discharge-item .discharge-time {
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .resource-card {
+            background: var(--color-background);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid var(--color-border);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .resource-card.available {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .resource-card.busy {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-surface);
+            border-radius: 12px;
+        }
+
+        .resource-info {
+            flex: 1;
+        }
+
+        .resource-info h5 {
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+        }
+
+        .resource-count {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .resource-bar {
+            height: 8px;
+            background: var(--color-border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .resource-detail {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+        }
+
+        .department-charts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .hospital-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .hospital-card {
+            background: var(--color-background);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+        }
+
+        .hospital-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .hospital-header h5 {
+            margin: 0;
+            color: var(--color-text);
+        }
+
+        .distance {
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .hospital-services {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .service-badge.available {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+
+        .service-badge.unavailable {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .doctor-portal {
+            min-height: 100vh;
+            background: var(--color-background);
+            padding: 2rem;
+        }
+
+        .portal-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .portal-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn {
+            padding: 0.5rem 1rem;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: var(--color-background);
+        }
+
+        .portal-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--color-border);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab-btn:hover {
+            color: var(--color-primary);
+        }
+
+        .tab-content {
+            background: var(--color-surface);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .login-form h3 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.75rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--color-background);
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-info h4 {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-number {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        .recent-activity {
+            margin-top: 2rem;
+        }
+
+        .recent-activity h3 {
+            margin-bottom: 1rem;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            padding: 1rem;
+            background: var(--color-background);
+            border-radius: 8px;
+            border-left: 3px solid var(--color-primary);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .activity-time {
+            font-weight: 600;
+            color: var(--color-primary);
+            min-width: 80px;
+        }
+
+        .activity-desc {
+            color: var(--color-text-secondary);
+        }
+
+        .search-bar {
+            margin-bottom: 1.5rem;
+        }
+
+        .patients-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .patient-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: var(--color-background);
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+        }
+
+        .patient-info h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .patient-info p {
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .appointments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .appointments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .appointment-card {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: var(--color-background);
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+            align-items: center;
+        }
+
+        .appointment-time {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+        }
+
+        .appointment-time .time {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .appointment-time .duration {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+        }
+
+        .appointment-details {
+            flex: 1;
+        }
+
+        .appointment-details h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .appointment-details p {
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .status-confirmed {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+        }
+
+        @media (max-width: 768px) {
+            .appointment-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stat-card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+
+    <script>
+        // Navigation state
+        let currentPage = 'home';
+        let currentTab = 'login';
+
+        // Chart instances
+        let dischargeChart, workflowChart, departmentChart, queueChart;
+
+        // Initialize charts
+        function initCharts() {
+            // Discharge Status Pie Chart
+            const dischargeCtx = document.getElementById('dischargeStatusChart');
+            if (dischargeCtx) {
+                dischargeChart = new Chart(dischargeCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Ready for Discharge', 'In Progress', 'Pending Approval', 'Completed Today'],
+                        datasets: [{
+                            data: [8, 15, 5, 22],
+                            backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6', '#10b981'],
+                            borderWidth: 2,
+                            borderColor: '#ffffff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { position: 'bottom' },
+                            title: { display: false }
+                        }
+                    }
+                });
+            }
+
+            // Workflow Efficiency Bar Chart
+            const workflowCtx = document.getElementById('workflowEfficiencyChart');
+            if (workflowCtx) {
+                workflowChart = new Chart(workflowCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Discharges Processed',
+                            data: [12, 19, 15, 17, 22, 18, 14],
+                            backgroundColor: '#3b82f6',
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+            }
+
+            // Department Load Bar Chart
+            const departmentCtx = document.getElementById('departmentLoadChart');
+            if (departmentCtx) {
+                departmentChart = new Chart(departmentCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Emergency', 'ICU', 'Cardiology', 'Neurology', 'Pediatrics', 'Orthopedics'],
+                        datasets: [{
+                            label: 'Current Patients',
+                            data: [45, 28, 35, 22, 38, 31],
+                            backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6', '#8b5cf6', '#10b981', '#06b6d4'],
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        indexAxis: 'y',
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: { beginAtZero: true }
+                        }
+                    }
+                });
+            }
+
+            // Queue Status Chart
+            const queueCtx = document.getElementById('queueStatusChart');
+            if (queueCtx) {
+                queueChart = new Chart(queueCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['8 AM', '10 AM', '12 PM', '2 PM', '4 PM', '6 PM'],
+                        datasets: [{
+                            label: 'Queue Length',
+                            data: [12, 25, 18, 22, 15, 8],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Show/hide sections
+        function showHome() {
+            document.querySelector('.hero').style.display = 'block';
+            document.querySelector('.features').style.display = 'block';
+            document.querySelector('.services').style.display = 'block';
+            document.querySelector('.login-selector-section').style.display = 'none';
+            document.querySelectorAll('.portal-section').forEach(portal => {
+                portal.style.display = 'none';
+            });
+            currentPage = 'home';
+            window.location.hash = 'home';
+        }
+
+        function showLoginSelector() {
+            document.querySelector('.hero').style.display = 'none';
+            document.querySelector('.features').style.display = 'none';
+            document.querySelector('.services').style.display = 'none';
+            document.querySelector('.login-selector-section').style.display = 'block';
+            document.querySelectorAll('.portal-section').forEach(portal => {
+                portal.style.display = 'none';
+            });
+            currentPage = 'login-selector';
+            window.location.hash = 'login-selector';
+        }
+
+        function showPortal(role) {
+            document.querySelector('.hero').style.display = 'none';
+            document.querySelector('.features').style.display = 'none';
+            document.querySelector('.services').style.display = 'none';
+            document.querySelector('.login-selector-section').style.display = 'none';
+            document.querySelectorAll('.portal-section').forEach(portal => {
+                portal.style.display = 'none';
+            });
+            document.getElementById(role).style.display = 'block';
+            currentPage = role;
+            window.location.hash = role;
+            
+            // Initialize charts if doctor portal
+            if (role === 'doctor') {
+                setTimeout(initCharts, 100);
+            }
+        }
+
+        // Tab switching
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
+
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName + '-tab').style.display = 'block';
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            currentTab = tabName;
+        }
+
+        // Handle login
+        function handleLogin(event) {
+            event.preventDefault();
+            const doctorId = document.getElementById('doctor-id').value;
+            const password = document.getElementById('password').value;
+
+            if (doctorId && password) {
+                alert('Login successful! Redirecting to dashboard...');
+                showTab('dashboard');
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                setTimeout(initCharts, 200);
+            }
+        }
+
+        function handleNurseLogin(event) {
+            event.preventDefault();
+            const nurseId = document.getElementById('nurse-id').value;
+            const password = document.getElementById('nurse-password').value;
+
+            if (nurseId && password) {
+                alert('Nurse login successful! Redirecting to dashboard...');
+                showNurseTab('nurse-dashboard');
+                document.querySelectorAll('#nurse .tab-btn')[1].classList.add('active');
+                document.querySelectorAll('#nurse .tab-btn')[0].classList.remove('active');
+            }
+        }
+
+        function handlePatientLogin(event) {
+            event.preventDefault();
+            const patientId = document.getElementById('patient-id').value;
+            const password = document.getElementById('patient-password').value;
+
+            if (patientId && password) {
+                alert('Patient login successful! Redirecting to dashboard...');
+                showPatientTab('patient-dashboard');
+                document.querySelectorAll('#patient .tab-btn')[1].classList.add('active');
+                document.querySelectorAll('#patient .tab-btn')[0].classList.remove('active');
+            }
+        }
+
+        function handleStaffLogin(event) {
+            event.preventDefault();
+            const staffId = document.getElementById('staff-id').value;
+            const password = document.getElementById('staff-password').value;
+
+            if (staffId && password) {
+                alert('Staff login successful! Redirecting to dashboard...');
+                showStaffTab('staff-dashboard');
+                document.querySelectorAll('#staff .tab-btn')[1].classList.add('active');
+                document.querySelectorAll('#staff .tab-btn')[0].classList.remove('active');
+                setTimeout(initStaffCharts, 200);
+            }
+        }
+
+        // Tab switching functions for each portal
+        function showNurseTab(tabName) {
+            const nurseSection = document.getElementById('nurse');
+            nurseSection.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            nurseSection.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabName + '-tab').style.display = 'block';
+            event.target.classList.add('active');
+        }
+
+        function showPatientTab(tabName) {
+            const patientSection = document.getElementById('patient');
+            patientSection.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            patientSection.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabName + '-tab').style.display = 'block';
+            event.target.classList.add('active');
+        }
+
+        function showStaffTab(tabName) {
+            const staffSection = document.getElementById('staff');
+            staffSection.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            staffSection.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabName + '-tab').style.display = 'block';
+            event.target.classList.add('active');
+            
+            // Initialize staff charts if needed
+            if (tabName === 'staff-dashboard' || tabName === 'staff-discharge') {
+                setTimeout(initStaffCharts, 100);
+            }
+        }
+
+        // Initialize staff-specific charts
+        function initStaffCharts() {
+            const staffDeptCtx = document.getElementById('staffDepartmentChart');
+            if (staffDeptCtx && !staffDeptCtx.chart) {
+                staffDeptCtx.chart = new Chart(staffDeptCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Emergency', 'ICU', 'Cardiology', 'Neurology', 'Pediatrics', 'Orthopedics'],
+                        datasets: [{
+                            label: 'Occupancy %',
+                            data: [85, 90, 70, 55, 75, 62],
+                            backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6', '#8b5cf6', '#10b981', '#06b6d4'],
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true, max: 100 } }
+                    }
+                });
+            }
+
+            const staffDischargeCtx = document.getElementById('staffDischargeChart');
+            if (staffDischargeCtx && !staffDischargeCtx.chart) {
+                staffDischargeCtx.chart = new Chart(staffDischargeCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Ready (Auto-detected)', 'In Progress', 'Pending Clearance', 'Completed Today'],
+                        datasets: [{
+                            data: [8, 15, 5, 22],
+                            backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6', '#10b981'],
+                            borderWidth: 2,
+                            borderColor: '#ffffff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+            }
+
+            const staffWorkflowCtx = document.getElementById('staffWorkflowChart');
+            if (staffWorkflowCtx && !staffWorkflowCtx.chart) {
+                staffWorkflowCtx.chart = new Chart(staffWorkflowCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Discharges Processed',
+                            data: [12, 19, 15, 17, 22, 18, 14],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true } }
+                    }
+                });
+            }
+        }
+
+        // Handle navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle hash changes for navigation
+            function handleNavigation() {
+                const hash = window.location.hash.substring(1);
+                if (hash === 'login-selector') {
+                    showLoginSelector();
+                } else if (hash === 'doctor' || hash === 'nurse' || hash === 'patient' || hash === 'staff') {
+                    showPortal(hash);
+                } else if (hash === 'home' || hash === '') {
+                    showHome();
+                }
+            }
+
+            // Listen for hash changes
+            window.addEventListener('hashchange', handleNavigation);
+
+            // Initial navigation
+            handleNavigation();
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    
+                    if (href === '#login-selector') {
+                        e.preventDefault();
+                        showLoginSelector();
+                    } else if (href === '#home') {
+                        e.preventDefault();
+                        showHome();
+                    } else if (href.startsWith('#') && ['#doctor', '#nurse', '#patient', '#staff'].includes(href)) {
+                        e.preventDefault();
+                        showPortal(href.substring(1));
+                    } else {
+                        const target = document.querySelector(href);
+                        if (target && currentPage === 'home') {
+                            e.preventDefault();
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+
+            // Add animation on scroll
+            const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .service-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s, transform 0.5s';
+            observer.observe(el);
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

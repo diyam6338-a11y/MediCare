@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics & Billing - QuickHealth</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-card: #252525;
+            --text-primary: #e5e5e5;
+            --text-secondary: #a0a0a0;
+            --accent-primary: #00d4ff;
+            --accent-secondary: #0099cc;
+            --success: #00ff88;
+            --warning: #ffaa00;
+            --danger: #ff4444;
+            --border: #3a3a3a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        header {
+            background: var(--bg-secondary);
+            padding: 1rem 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            margin-bottom: 2rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .metric-card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.2);
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-change {
+            font-size: 0.9rem;
+            color: var(--success);
+        }
+
+        .metric-change.negative {
+            color: var(--danger);
+        }
+
+        .chart-container {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .chart-title {
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .charts-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .billing-section {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .billing-title {
+            color: var(--accent-primary);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .billing-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .billing-table th {
+            background: var(--bg-card);
+            padding: 1rem;
+            text-align: left;
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        .billing-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--success);
+        }
+
+        .status-overdue {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+        }
+
+        .status-pending {
+            background: rgba(255, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        .revenue-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .revenue-item {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-primary);
+        }
+
+        .revenue-item-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .revenue-item-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--success);
+        }
+
+        .alert {
+            background: rgba(255, 170, 0, 0.1);
+            border: 1px solid var(--warning);
+            padding: 1rem;
+            border-radius: 8px;
+            color: var(--warning);
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 1.8rem;
+            }
+
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">QuickHealth Analytics</a>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="analytics.html">Analytics</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="login.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title">📊 Hospital Analytics & Revenue Insights</h1>
+
+        <!-- Key Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Monthly Recurring Revenue (MRR)</div>
+                <div class="metric-value" id="mrrValue">₹25,000</div>
+                <div class="metric-change">↑ 15% from last month</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Total Discharges (This Month)</div>
+                <div class="metric-value" id="dischargeValue">156</div>
+                <div class="metric-change">↑ 23 from last month</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Avg Length of Stay Reduction</div>
+                <div class="metric-value" id="losValue">32%</div>
+                <div class="metric-change">Saving ₹4,80,000/month</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Bed Turnover Increase</div>
+                <div class="metric-value" id="turnoverValue">28%</div>
+                <div class="metric-change">↑ Additional revenue ₹7,20,000</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">System Uptime</div>
+                <div class="metric-value" id="uptimeValue">99.97%</div>
+                <div class="metric-change">Premium SLA maintained</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Active Integrations</div>
+                <div class="metric-value" id="integrationsValue">8</div>
+                <div class="metric-change">HIS, Lab, Pharmacy, Billing...</div>
+            </div>
+        </div>
+
+        <!-- Revenue Charts -->
+        <div class="charts-row">
+            <div class="chart-container">
+                <h3 class="chart-title">Monthly Revenue Trend</h3>
+                <canvas id="revenueChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Revenue Breakdown by Service</h3>
+                <canvas id="breakdownChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Usage & Performance -->
+        <div class="charts-row">
+            <div class="chart-container">
+                <h3 class="chart-title">Discharge Processing Over Time</h3>
+                <canvas id="dischargeChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Length of Stay Trend</h3>
+                <canvas id="losChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Billing Section -->
+        <div class="billing-section">
+            <h2 class="billing-title">📄 Current Billing Information</h2>
+            
+            <div class="alert">
+                <strong>⚠️ Upcoming Invoice:</strong> Your next invoice will be generated on December 1st for ₹32,500 (Professional Plan + Advanced Analytics Add-on)
+            </div>
+
+            <table class="billing-table">
+                <thead>
+                    <tr>
+                        <th>Invoice #</th>
+                        <th>Period</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#INV-2025-0012</td>
+                        <td>Nov 1 - 30, 2025</td>
+                        <td>₹25,000</td>
+                        <td><span class="status-badge status-active">Paid</span></td>
+                        <td>Nov 1, 2025</td>
+                    </tr>
+                    <tr>
+                        <td>#INV-2025-0011</td>
+                        <td>Oct 1 - 31, 2025</td>
+                        <td>₹25,000</td>
+                        <td><span class="status-badge status-active">Paid</span></td>
+                        <td>Oct 1, 2025</td>
+                    </tr>
+                    <tr>
+                        <td>#INV-2025-0010</td>
+                        <td>Sep 1 - 30, 2025</td>
+                        <td>₹20,000 + Setup ₹75,000</td>
+                        <td><span class="status-badge status-active">Paid</span></td>
+                        <td>Sep 1, 2025</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="revenue-breakdown">
+                <div class="revenue-item">
+                    <div class="revenue-item-label">Base Plan Subscription</div>
+                    <div class="revenue-item-value">₹25,000</div>
+                </div>
+                <div class="revenue-item">
+                    <div class="revenue-item-label">Add-on Modules</div>
+                    <div class="revenue-item-value">₹7,500</div>
+                </div>
+                <div class="revenue-item">
+                    <div class="revenue-item-label">Overage Charges</div>
+                    <div class="revenue-item-value">₹0</div>
+                </div>
+                <div class="revenue-item">
+                    <div class="revenue-item-label">Monthly Total</div>
+                    <div class="revenue-item-value">₹32,500</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage-Based Revenue -->
+        <div class="billing-section">
+            <h2 class="billing-title">📈 Usage-Based Revenue Metrics</h2>
+
+            <table class="billing-table">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Unit</th>
+                        <th>Usage This Month</th>
+                        <th>Included</th>
+                        <th>Overage</th>
+                        <th>Charge</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Patient Discharges</td>
+                        <td>Per discharge</td>
+                        <td>156</td>
+                        <td>100</td>
+                        <td>56</td>
+                        <td>₹0 (Within limit)</td>
+                    </tr>
+                    <tr>
+                        <td>API Calls</td>
+                        <td>Per call</td>
+                        <td>8,450</td>
+                        <td>10,000</td>
+                        <td>0</td>
+                        <td>₹0</td>
+                    </tr>
+                    <tr>
+                        <td>Active Patients</td>
+                        <td>Per patient/month</td>
+                        <td>425</td>
+                        <td>Unlimited</td>
+                        <td>0</td>
+                        <td>₹0</td>
+                    </tr>
+                    <tr>
+                        <td>Data Storage</td>
+                        <td>Per GB</td>
+                        <td>45 GB</td>
+                        <td>100 GB</td>
+                        <td>0</td>
+                        <td>₹0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ROI Summary -->
+        <div class="billing-section">
+            <h2 class="billing-title">💰 Your Return on Investment (ROI)</h2>
+
+            <table class="billing-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Before QuickHealth</th>
+                        <th>After QuickHealth</th>
+                        <th>Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Avg Length of Stay</td>
+                        <td>7.0 days</td>
+                        <td>4.75 days</td>
+                        <td>✓ -32% (₹4,80,000/month saved)</td>
+                    </tr>
+                    <tr>
+                        <td>Monthly Discharges</td>
+                        <td>120</td>
+                        <td>156</td>
+                        <td>✓ +30% (₹7,20,000 extra revenue)</td>
+                    </tr>
+                    <tr>
+                        <td>Discharge Delays</td>
+                        <td>18% average</td>
+                        <td>4% average</td>
+                        <td>✓ -78% (Improved patient satisfaction)</td>
+                    </tr>
+                    <tr>
+                        <td>Bed Turnover</td>
+                        <td>4.2 patients/bed/month</td>
+                        <td>5.4 patients/bed/month</td>
+                        <td>✓ +28% additional capacity</td>
+                    </tr>
+                    <tr>
+                        <td>Administrative Cost</td>
+                        <td>₹15,000/month</td>
+                        <td>₹8,000/month</td>
+                        <td>✓ -47% labor savings (₹7,000/month)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top: 2rem; padding: 1.5rem; background: var(--bg-card); border-radius: 8px; border-left: 4px solid var(--success);">
+                <h3 style="color: var(--success); margin-bottom: 1rem;">Annual ROI Calculation:</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">
+                    <strong>Total Annual Savings:</strong> ₹12,00,000 (Reduced LoS) + ₹2,16,000 (Extra Revenue) + ₹84,000 (Labor Savings) = <strong style="color: var(--success);">₹14,00,000</strong>
+                </p>
+                <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">
+                    <strong>Annual QuickHealth Cost:</strong> ₹32,500 × 12 = <strong>₹3,90,000</strong>
+                </p>
+                <p style="color: var(--text-secondary);">
+                    <strong>Net Annual Benefit:</strong> ₹14,00,000 - ₹3,90,000 = <strong style="color: var(--success); font-size: 1.2rem;">₹10,10,000</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Revenue Trend Chart
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['June', 'July', 'Aug', 'Sept', 'Oct', 'Nov'],
+                datasets: [{
+                    label: 'Monthly Revenue (₹)',
+                    data: [0, 25000, 25000, 32500, 32500, 32500],
+                    borderColor: '#00d4ff',
+                    backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#e5e5e5' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#a0a0a0' },
+                        grid: { color: '#3a3a3a' }
+                    },
+                    x: {
+                        ticks: { color: '#a0a0a0' },
+                        grid: { color: '#3a3a3a' }
+                    }
+                }
+            }
+        });
+
+        // Revenue Breakdown Chart
+        const breakdownCtx = document.getElementById('breakdownChart').getContext('2d');
+        new Chart(breakdownCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Base Plan', 'Add-on Modules', 'Integration Fees', 'Support Tier'],
+                datasets: [{
+                    data: [25000, 7500, 0, 0],
+                    backgroundColor: ['#00d4ff', '#00ff88', '#ffaa00', '#ff4444']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#e5e5e5' } }
+                }
+            }
+        });
+
+        // Discharge Processing Chart
+        const dischargeCtx = document.getElementById('dischargeChart').getContext('2d');
+        new Chart(dischargeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Discharges Processed',
+                    data: [35, 42, 38, 41],
+                    backgroundColor: '#00ff88'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#e5e5e5' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#a0a0a0' },
+                        grid: { color: '#3a3a3a' }
+                    },
+                    x: {
+                        ticks: { color: '#a0a0a0' },
+                        grid: { color: '#3a3a3a' }
+                    }
+                }
+            }
+        });
+
+        // Length of Stay Chart
+        const losCtx = document.getElementById('losChart').getContext('2d');
+        new Chart(losCtx, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Average LoS (days)',
+                    data: [5.2, 4.9, 4.8, 4.6],
+                    borderColor: '#ffaa00',
+                    backgroundColor: 'rgba(255, 170, 0, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#e5e5e5' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#a0a0a0' },
+                        grid: { color: '#3a3a3a' }
+                    },
+                    x: {
+                        ticks: { color: '#a0a0a0' },
+                        grid: { color: '#3a3a3a' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

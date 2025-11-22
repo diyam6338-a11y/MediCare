@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - QuickHealth</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-card: #252525;
+            --text-primary: #e5e5e5;
+            --text-secondary: #a0a0a0;
+            --accent-primary: #00d4ff;
+            --accent-secondary: #0099cc;
+            --success: #00ff88;
+            --warning: #ffaa00;
+            --danger: #ff4444;
+            --border: #3a3a3a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: var(--bg-secondary);
+            padding: 1rem 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            box-sizing: border-box;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-primary);
+            cursor: pointer;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .user-info {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,212,255,0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--accent-primary);
+            border: 2px solid var(--accent-primary);
+            padding: 0.6rem 1.2rem;
+            font-size: 0.95rem;
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2rem;
+            color: var(--accent-primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .table-container {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .table-container h3 {
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table thead {
+            background: var(--bg-primary);
+        }
+
+        table th {
+            padding: 1rem;
+            text-align: left;
+            color: var(--accent-primary);
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+
+        table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        table tr:hover {
+            background: var(--bg-primary);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-ready {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--success);
+        }
+
+        .status-pending {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+        }
+
+        .status-urgent {
+            background: rgba(255, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        .status-completed {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--success);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        /* AI Assistant Styles */
+        .ai-assistant-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(0, 212, 255, 0.05) 100%);
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .ai-header h3 {
+            color: var(--accent-primary);
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .symptom-input-section {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .ai-results {
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .result-section {
+            margin-bottom: 2rem;
+        }
+
+        .result-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .condition-item {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-primary);
+            margin-bottom: 1rem;
+        }
+
+        .condition-title {
+            color: var(--success);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .condition-confidence {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: var(--accent-primary);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .doctor-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .doctor-name {
+            color: var(--accent-primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .doctor-specialty {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            color: var(--accent-primary);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+        }
+
+        .close-btn:hover {
+            color: var(--accent-primary);
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 2000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.success {
+            background: var(--success);
+            color: var(--bg-primary);
+        }
+
+        .toast.error {
+            background: var(--danger);
+        }
+
+        .toast.info {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 0.75rem 1rem;
+            }
+
+            nav {
+                padding: 0 0.5rem;
+                gap: 0.75rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .nav-right {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .user-info {
+                font-size: 0.85rem;
+            }
+
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .dashboard-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            .table-container {
+                padding: 1rem;
+            }
+
+            table th,
+            table td {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 0.75rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .container {
+                padding: 1rem 0.75rem;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .dashboard-header h1 {
+                font-size: 1.3rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .stat-card {
+                padding: 0.75rem;
+            }
+
+            .stat-value {
+                font-size: 1.3rem;
+            }
+
+            .table-container {
+                padding: 0.75rem;
+            }
+
+            table th,
+            table td {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+
+            .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .modal-content {
+                padding: 1rem;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">QuickHealth</a>
+            <div class="nav-right">
+                <div class="user-info" id="userInfo"></div>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Doctor Dashboard -->
+        <div id="doctorDashboard" style="display: none;">
+            <div class="dashboard-header">
+                <h1>👨‍⚕️ Doctor Dashboard</h1>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="appointmentCount">8</div>
+                    <div class="stat-label">Today's Appointments</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="patientCount">25</div>
+                    <div class="stat-label">Total Patients</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Pending Consultations</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">92%</div>
+                    <div class="stat-label">Patient Satisfaction</div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h3>📅 Appointments</h3>
+                <button class="btn btn-primary" style="margin-bottom: 1rem;" onclick="openBookAppointmentModal('doctor')">+ New Appointment</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient</th>
+                            <th>Time</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="doctorAppointmentsTable">
+                        <tr>
+                            <td>John Doe</td>
+                            <td>9:00 AM</td>
+                            <td>Cardiology</td>
+                            <td><span class="status-badge status-ready">Confirmed</span></td>
+                            <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="startConsultation('John Doe')">Start</button></td>
+                        </tr>
+                        <tr>
+                            <td>Sarah Williams</td>
+                            <td>10:30 AM</td>
+                            <td>Cardiology</td>
+                            <td><span class="status-badge status-ready">Confirmed</span></td>
+                            <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="startConsultation('Sarah Williams')">Start</button></td>
+                        </tr>
+                        <tr>
+                            <td>Michael Brown</td>
+                            <td>2:00 PM</td>
+                            <td>Cardiology</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="cancelAppointment('Michael Brown')">Cancel</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <h3>📋 Patient List</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Diagnosis</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="doctorPatientsList">
+                        <tr>
+                            <td>P1001</td>
+                            <td>John Doe</td>
+                            <td>45</td>
+                            <td>Cardiac Condition</td>
+                            <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="viewPatientDetails('P1001')">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>P1002</td>
+                            <td>Sarah Williams</td>
+                            <td>38</td>
+                            <td>Hypertension</td>
+                            <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="viewPatientDetails('P1002')">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Patient Dashboard -->
+        <div id="patientDashboard" style="display: none;">
+            <div class="dashboard-header">
+                <h1>🧑‍🦰 Patient Dashboard</h1>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="myAppointmentCount">2</div>
+                    <div class="stat-label">Your Appointments</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">1</div>
+                    <div class="stat-label">Pending Reports</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">98.6°F</div>
+                    <div class="stat-label">Last Temperature</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">120/80</div>
+                    <div class="stat-label">Blood Pressure</div>
+                </div>
+            </div>
+
+            <!-- AI Symptom Assistant -->
+            <div class="ai-assistant-card">
+                <div class="ai-header">
+                    <h3>🤖 AI Health Assistant</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">Describe your symptoms and get AI-powered health insights</p>
+                </div>
+                
+                <div class="symptom-input-section">
+                    <label for="symptomInput" style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">Enter Your Symptoms:</label>
+                    <textarea 
+                        id="symptomInput" 
+                        placeholder="E.g., I have a severe headache, fever, and body aches for 3 days. My body temperature is 101°F."
+                        style="width: 100%; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-primary); color: var(--text-primary); resize: vertical; min-height: 80px; font-family: inherit;">
+                    </textarea>
+                    <button class="btn btn-primary" onclick="analyzeSymptoms()" style="margin-top: 1rem; width: 100%;">
+                        🔍 Analyze Symptoms
+                    </button>
+                </div>
+
+                <div id="aiResultsContainer" style="display: none; margin-top: 2rem;">
+                    <div class="ai-results">
+                        <div class="result-section">
+                            <h4 style="color: var(--accent-primary); margin-bottom: 1rem;">Possible Health Conditions:</h4>
+                            <div id="conditionsList" style="margin-bottom: 1.5rem;"></div>
+                        </div>
+
+                        <div class="result-section">
+                            <h4 style="color: var(--accent-primary); margin-bottom: 1rem;">Recommended Doctor & Specialization:</h4>
+                            <div id="recommendedDoctor" style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--success);"></div>
+                        </div>
+
+                        <div class="result-section">
+                            <h4 style="color: var(--accent-primary); margin-bottom: 1rem;">Important Note:</h4>
+                            <div style="background: rgba(255, 170, 0, 0.1); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--warning); color: var(--text-secondary);">
+                                ⚠️ This is an AI-powered preliminary assessment for informational purposes only. Please consult with a qualified healthcare professional for accurate diagnosis and treatment.
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="bookAppointmentFromAI()" style="margin-top: 1.5rem; width: 100%;">
+                            📅 Book Appointment with Recommended Doctor
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h3>📅 Your Appointments</h3>
+                <button class="btn btn-primary" style="margin-bottom: 1rem;" onclick="openBookAppointmentModal('patient')">+ Book Appointment</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Doctor</th>
+                            <th>Department</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patientAppointmentsTable">
+                        <tr>
+                            <td>Dr. Sarah Williams</td>
+                            <td>Cardiology</td>
+                            <td>Nov 25, 2025</td>
+                            <td>10:00 AM</td>
+                            <td><span class="status-badge status-ready">Confirmed</span></td>
+                            <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="rescheduleAppointment('Nov 25, 2025', '10:00 AM')">Reschedule</button></td>
+                        </tr>
+                        <tr>
+                            <td>Dr. Michael Brown</td>
+                            <td>General Medicine</td>
+                            <td>Nov 30, 2025</td>
+                            <td>2:00 PM</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="cancelAppointment('Dr. Michael Brown')">Cancel</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <h3>📄 Your Medical Reports</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Report Type</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lab Test Results</td>
+                            <td>Nov 20, 2025</td>
+                            <td><span class="status-badge status-ready">Available</span></td>
+                            <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="downloadReport('Lab Test Results')">Download</button></td>
+                        </tr>
+                        <tr>
+                            <td>X-Ray Report</td>
+                            <td>Nov 18, 2025</td>
+                            <td><span class="status-badge status-ready">Available</span></td>
+                            <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="downloadReport('X-Ray Report')">Download</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Nurse Dashboard -->
+        <div id="nurseDashboard" style="display: none;">
+            <div class="dashboard-header">
+                <h1>👩‍⚕️ Nurse Dashboard</h1>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">Patients Under Care</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Pending Tasks</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Urgent Cases</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">95%</div>
+                    <div class="stat-label">Task Completion</div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h3>✅ Your Tasks</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Patient</th>
+                            <th>Due Time</th>
+                            <th>Priority</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="nurseTasksTable">
+                        <tr>
+                            <td>Medication Round - Ward A</td>
+                            <td>Multiple</td>
+                            <td>2:00 PM</td>
+                            <td><span class="status-badge status-pending">Normal</span></td>
+                            <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="completeTask(1)">Mark Done</button></td>
+                        </tr>
+                        <tr>
+                            <td>Vitals Check - ICU</td>
+                            <td>Multiple</td>
+                            <td>Overdue: 15 mins</td>
+                            <td><span class="status-badge status-urgent">Urgent</span></td>
+                            <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="completeTask(2)">Mark Done</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Staff Dashboard -->
+        <div id="staffDashboard" style="display: none;">
+            <div class="dashboard-header">
+                <h1>👔 Staff Dashboard</h1>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">245</div>
+                    <div class="stat-label">Total Patients</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">32</div>
+                    <div class="stat-label">Pending Discharges</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Active Alerts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">85%</div>
+                    <div class="stat-label">Bed Occupancy</div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h3>🏥 Resource Availability</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                    <div class="stat-card">
+                        <div class="stat-label">ICU Beds</div>
+                        <div style="margin-top: 0.5rem;">
+                            <progress value="12" max="20" style="width: 100%; height: 20px;"></progress>
+                            <p style="margin-top: 0.5rem; color: var(--text-secondary);">12 / 20 Available</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">General Beds</div>
+                        <div style="margin-top: 0.5rem;">
+                            <progress value="145" max="200" style="width: 100%; height: 20px;"></progress>
+                            <p style="margin-top: 0.5rem; color: var(--text-secondary);">145 / 200 Available</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Ambulances</div>
+                        <div style="margin-top: 0.5rem;">
+                            <progress value="5" max="8" style="width: 100%; height: 20px;"></progress>
+                            <p style="margin-top: 0.5rem; color: var(--text-secondary);">5 / 8 Available</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Staff On Duty</div>
+                        <div style="margin-top: 0.5rem;">
+                            <p style="color: var(--text-secondary);">Doctors: 24 / 30</p>
+                            <p style="color: var(--text-secondary);">Nurses: 45 / 50</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Appointment Modal -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Book Appointment</h2>
+                <button class="close-btn" onclick="closeModal('appointmentModal')">&times;</button>
+            </div>
+            <form onsubmit="handleBookAppointment(event)">
+                <div class="form-group">
+                    <label>Department</label>
+                    <select id="bookingDept" required>
+                        <option value="">Select Department</option>
+                        <option value="Cardiology">Cardiology</option>
+                        <option value="Neurology">Neurology</option>
+                        <option value="Pediatrics">Pediatrics</option>
+                        <option value="Orthopedics">Orthopedics</option>
+                        <option value="General Medicine">General Medicine</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Doctor</label>
+                    <select id="bookingDoctor" required>
+                        <option value="">Select Doctor</option>
+                        <option value="Dr. Sarah Williams">Dr. Sarah Williams</option>
+                        <option value="Dr. Michael Brown">Dr. Michael Brown</option>
+                        <option value="Dr. Emily Davis">Dr. Emily Davis</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="bookingDate" min="${new Date().toISOString().split('T')[0]}" required>
+                </div>
+                <div class="form-group">
+                    <label>Time</label>
+                    <select id="bookingTime" required>
+                        <option value="">Select Time</option>
+                        <option value="9:00 AM">9:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="2:00 PM">2:00 PM</option>
+                        <option value="3:00 PM">3:00 PM</option>
+                        <option value="4:00 PM">4:00 PM</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Reason for Visit</label>
+                    <textarea id="bookingReason" rows="3" placeholder="Describe your concern..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Book Appointment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Consultation Modal -->
+    <div id="consultationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Start Consultation</h2>
+                <button class="close-btn" onclick="closeModal('consultationModal')">&times;</button>
+            </div>
+            <form onsubmit="saveConsultation(event)">
+                <div class="form-group">
+                    <label>Chief Complaint</label>
+                    <textarea rows="3" placeholder="Patient's main concern..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Examination Notes</label>
+                    <textarea rows="4" placeholder="Physical examination findings..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Diagnosis</label>
+                    <input type="text" placeholder="Primary diagnosis..." required>
+                </div>
+                <div class="form-group">
+                    <label>Prescription</label>
+                    <textarea rows="3" placeholder="Medications and dosage..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Save Consultation</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const currentUser = new URLSearchParams(window.location.search).get('role') || 'patient';
+        const userInfo = document.getElementById('userInfo');
+
+        const roleDisplayNames = {
+            doctor: 'Dr. Sarah Johnson (Cardiology)',
+            nurse: 'Maria Garcia (ICU Nurse)',
+            patient: 'John Doe (Patient)',
+            staff: 'Admin Staff'
+        };
+
+        // Initialize dashboard
+        function initDashboard() {
+            userInfo.textContent = `Logged in as: ${roleDisplayNames[currentUser]}`;
+
+            // Hide all dashboards
+            document.getElementById('doctorDashboard').style.display = 'none';
+            document.getElementById('patientDashboard').style.display = 'none';
+            document.getElementById('nurseDashboard').style.display = 'none';
+            document.getElementById('staffDashboard').style.display = 'none';
+
+            // Show current role dashboard
+            if (currentUser === 'doctor') {
+                document.getElementById('doctorDashboard').style.display = 'block';
+                loadDoctorAppointments();
+            } else if (currentUser === 'patient') {
+                document.getElementById('patientDashboard').style.display = 'block';
+                loadPatientAppointments();
+            } else if (currentUser === 'nurse') {
+                document.getElementById('nurseDashboard').style.display = 'block';
+                loadNurseTasksData();
+            } else if (currentUser === 'staff') {
+                document.getElementById('staffDashboard').style.display = 'block';
+            }
+        }
+
+        function loadDoctorAppointments() {
+            const tbody = document.getElementById('doctorAppointmentsTable');
+            const appointments = [
+                { patient: 'John Doe', time: '9:00 AM', dept: 'Cardiology', status: 'Confirmed' },
+                { patient: 'Sarah Williams', time: '10:30 AM', dept: 'Cardiology', status: 'Confirmed' },
+                { patient: 'Michael Brown', time: '2:00 PM', dept: 'Cardiology', status: 'Pending' }
+            ];
+            tbody.innerHTML = appointments.map(apt => `
+                <tr>
+                    <td>${apt.patient}</td>
+                    <td>${apt.time}</td>
+                    <td>${apt.dept}</td>
+                    <td><span class="status-badge status-${apt.status === 'Confirmed' ? 'ready' : 'pending'}">${apt.status}</span></td>
+                    <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="startConsultation('${apt.patient}')">Start</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function loadPatientAppointments() {
+            const tbody = document.getElementById('patientAppointmentsTable');
+            const appointments = [
+                { doctor: 'Dr. Sarah Williams', dept: 'Cardiology', date: 'Nov 25, 2025', time: '10:00 AM', status: 'Confirmed' },
+                { doctor: 'Dr. Michael Brown', dept: 'General Medicine', date: 'Nov 30, 2025', time: '2:00 PM', status: 'Pending' }
+            ];
+            tbody.innerHTML = appointments.map(apt => `
+                <tr>
+                    <td>${apt.doctor}</td>
+                    <td>${apt.dept}</td>
+                    <td>${apt.date}</td>
+                    <td>${apt.time}</td>
+                    <td><span class="status-badge status-${apt.status === 'Confirmed' ? 'ready' : 'pending'}">${apt.status}</span></td>
+                    <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="rescheduleAppointment('${apt.date}', '${apt.time}')">Reschedule</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function loadNurseTasksData() {
+            const tbody = document.getElementById('nurseTasksTable');
+            const tasks = [
+                { task: 'Medication Round - Ward A', patient: 'Multiple', time: '2:00 PM', priority: 'Normal' },
+                { task: 'Vitals Check - ICU', patient: 'Multiple', time: 'Overdue: 15 mins', priority: 'Urgent' }
+            ];
+            tbody.innerHTML = tasks.map(t => `
+                <tr>
+                    <td>${t.task}</td>
+                    <td>${t.patient}</td>
+                    <td>${t.time}</td>
+                    <td><span class="status-badge status-${t.priority === 'Normal' ? 'pending' : 'urgent'}">${t.priority}</span></td>
+                    <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Mark Done</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function openBookAppointmentModal(role) {
+            document.getElementById('appointmentModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function handleBookAppointment(event) {
+            event.preventDefault();
+            const doctor = document.getElementById('bookingDoctor').value;
+            const date = document.getElementById('bookingDate').value;
+            const time = document.getElementById('bookingTime').value;
+            showToast(`Appointment booked with ${doctor} on ${date} at ${time}`, 'success');
+            closeModal('appointmentModal');
+            event.target.reset();
+            
+            if (currentUser === 'patient') {
+                loadPatientAppointments();
+            }
+        }
+
+        function startConsultation(patientName) {
+            document.getElementById('consultationModal').classList.add('active');
+        }
+
+        function saveConsultation(event) {
+            event.preventDefault();
+            showToast('Consultation saved successfully', 'success');
+            closeModal('consultationModal');
+            event.target.reset();
+        }
+
+        function rescheduleAppointment(date, time) {
+            showToast(`Rescheduling appointment from ${date} at ${time}`, 'info');
+            openBookAppointmentModal('patient');
+        }
+
+        function cancelAppointment(appointment) {
+            if (confirm(`Are you sure you want to cancel this appointment?`)) {
+                showToast('Appointment cancelled successfully', 'success');
+                loadPatientAppointments();
+            }
+        }
+
+        function viewPatientDetails(patientId) {
+            const patients = {
+                'P1001': {
+                    name: 'John Doe',
+                    age: 45,
+                    diagnosis: 'Cardiac Condition',
+                    bloodType: 'O+',
+                    lastCheckup: 'Nov 15, 2025',
+                    medications: ['Aspirin 500mg', 'Atorvastatin 20mg', 'Metoprolol 50mg'],
+                    notes: 'Patient showing improvement. Continue current medication. Follow-up in 2 weeks.'
+                },
+                'P1002': {
+                    name: 'Sarah Williams',
+                    age: 38,
+                    diagnosis: 'Hypertension',
+                    bloodType: 'A+',
+                    lastCheckup: 'Nov 18, 2025',
+                    medications: ['Lisinopril 10mg', 'Amlodipine 5mg'],
+                    notes: 'BP controlled with current regimen. Lifestyle modifications advised.'
+                }
+            };
+            
+            const patient = patients[patientId];
+            if (patient) {
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.style.position = 'fixed';
+                modal.style.zIndex = '2000';
+                modal.style.left = '0';
+                modal.style.top = '0';
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+                modal.style.display = 'flex';
+                modal.style.justifyContent = 'center';
+                modal.style.alignItems = 'center';
+                
+                modal.innerHTML = `
+                    <div style="background: var(--bg-secondary); padding: 2rem; border-radius: 12px; max-width: 500px; width: 90%; border: 1px solid var(--border);">
+                        <h2 style="color: var(--accent-primary); margin-bottom: 1.5rem;">${patient.name}</h2>
+                        <div style="margin-bottom: 1rem;">
+                            <p><strong>Patient ID:</strong> ${patientId}</p>
+                            <p><strong>Age:</strong> ${patient.age} years</p>
+                            <p><strong>Blood Type:</strong> ${patient.bloodType}</p>
+                            <p><strong>Diagnosis:</strong> ${patient.diagnosis}</p>
+                            <p><strong>Last Checkup:</strong> ${patient.lastCheckup}</p>
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <h3 style="color: var(--warning); margin-bottom: 0.5rem;">Current Medications:</h3>
+                            <ul style="color: var(--text-secondary); margin-left: 1.5rem;">
+                                ${patient.medications.map(med => '<li>' + med + '</li>').join('')}
+                            </ul>
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <h3 style="color: var(--success); margin-bottom: 0.5rem;">Doctor Notes:</h3>
+                            <p style="color: var(--text-secondary);">${patient.notes}</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="this.parentElement.parentElement.remove();" style="width: 100%; cursor: pointer;">Close</button>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                modal.onclick = (e) => {
+                    if (e.target === modal) modal.remove();
+                };
+                
+                showToast(`Viewing patient ${patient.name}`, 'info');
+            }
+        }
+
+        function downloadReport(reportType) {
+            showToast(`Downloading ${reportType}...`, 'info');
+            
+            const element = document.createElement('a');
+            const fileName = reportType.replace(/\s+/g, '_') + '_' + new Date().getTime() + '.txt';
+            
+            const content = `QUICKHEALTH HOSPITAL\nMEDICAL REPORT\n\nReport Type: ${reportType}\nGenerated Date: ${new Date().toLocaleDateString()}\nGenerated Time: ${new Date().toLocaleTimeString()}\nPatient Name: Your Name\nPatient ID: P1001\n\nReport Summary:\nThis is your ${reportType.toLowerCase()} report from QuickHealth Hospital.\nAll test results are within normal ranges.\n\nNote: This is a digital copy of your medical report.\nFor any clarifications, please contact the hospital.`;
+            
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', fileName);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            
+            setTimeout(() => {
+                showToast(`${reportType} downloaded as ${fileName}`, 'success');
+            }, 500);
+        }
+
+        function completeTask(taskId) {
+            const tasksTable = document.getElementById('nurseTasksTable');
+            const rows = tasksTable.querySelectorAll('tr');
+            
+            if (taskId > 0 && taskId <= rows.length) {
+                const row = rows[taskId - 1];
+                
+                const statusBadge = row.querySelector('.status-badge');
+                if (statusBadge) {
+                    statusBadge.className = 'status-badge status-completed';
+                    statusBadge.style.backgroundColor = 'var(--success)';
+                    statusBadge.style.color = 'var(--bg-primary)';
+                    statusBadge.textContent = 'Completed';
+                }
+                
+                const button = row.querySelector('button');
+                if (button) {
+                    button.disabled = true;
+                    button.style.opacity = '0.5';
+                    button.textContent = '✓ Done';
+                    button.style.cursor = 'not-allowed';
+                }
+                
+                row.style.opacity = '0.7';
+                row.style.backgroundColor = 'rgba(0, 255, 136, 0.1)';
+                
+                showToast('Task marked as complete!', 'success');
+            } else {
+                showToast('Task not found', 'danger');
+            }
+        }
+
+        function logout() {
+            showToast('Logging out...', 'info');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1500);
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // ==================== AI SYMPTOM ANALYSIS SYSTEM ====================
+
+        // Comprehensive symptom-to-condition mapping with medical data
+        const symptomDatabase = {
+            'fever': {
+                conditions: [
+                    { name: 'Common Cold', confidence: 0.65, doctors: ['General Physician', 'Internal Medicine'] },
+                    { name: 'Influenza (Flu)', confidence: 0.70, doctors: ['General Physician', 'Infectious Disease'] },
+                    { name: 'COVID-19', confidence: 0.55, doctors: ['Infectious Disease Specialist', 'General Physician'] },
+                    { name: 'Pneumonia', confidence: 0.45, doctors: ['Pulmonologist', 'General Physician'] }
+                ]
+            },
+            'headache': {
+                conditions: [
+                    { name: 'Tension Headache', confidence: 0.70, doctors: ['General Physician', 'Neurologist'] },
+                    { name: 'Migraine', confidence: 0.65, doctors: ['Neurologist', 'General Physician'] },
+                    { name: 'Sinusitis', confidence: 0.55, doctors: ['ENT Specialist', 'General Physician'] },
+                    { name: 'High Blood Pressure', confidence: 0.40, doctors: ['Cardiologist', 'General Physician'] }
+                ]
+            },
+            'cough': {
+                conditions: [
+                    { name: 'Common Cold', confidence: 0.75, doctors: ['General Physician', 'Pulmonologist'] },
+                    { name: 'Bronchitis', confidence: 0.70, doctors: ['Pulmonologist', 'General Physician'] },
+                    { name: 'Asthma', confidence: 0.60, doctors: ['Pulmonologist', 'Allergist'] },
+                    { name: 'Pneumonia', confidence: 0.65, doctors: ['Pulmonologist', 'General Physician'] }
+                ]
+            },
+            'body ache': {
+                conditions: [
+                    { name: 'Influenza (Flu)', confidence: 0.75, doctors: ['General Physician', 'Infectious Disease'] },
+                    { name: 'Muscle Strain', confidence: 0.65, doctors: ['Orthopedic Surgeon', 'General Physician'] },
+                    { name: 'Arthritis', confidence: 0.50, doctors: ['Rheumatologist', 'Orthopedic Surgeon'] }
+                ]
+            },
+            'chest pain': {
+                conditions: [
+                    { name: 'Heart Attack', confidence: 0.70, doctors: ['Cardiologist', 'Emergency Medicine'], urgent: true },
+                    { name: 'Angina', confidence: 0.65, doctors: ['Cardiologist', 'General Physician'], urgent: true },
+                    { name: 'Acid Reflux', confidence: 0.60, doctors: ['Gastroenterologist', 'General Physician'] },
+                    { name: 'Muscle Strain', confidence: 0.55, doctors: ['Orthopedic Surgeon', 'General Physician'] }
+                ]
+            },
+            'shortness of breath': {
+                conditions: [
+                    { name: 'Asthma', confidence: 0.75, doctors: ['Pulmonologist', 'Allergist'] },
+                    { name: 'Pneumonia', confidence: 0.70, doctors: ['Pulmonologist', 'General Physician'] },
+                    { name: 'Heart Disease', confidence: 0.65, doctors: ['Cardiologist', 'General Physician'], urgent: true },
+                    { name: 'Anxiety', confidence: 0.50, doctors: ['Psychiatrist', 'General Physician'] }
+                ]
+            },
+            'diarrhea': {
+                conditions: [
+                    { name: 'Gastroenteritis', confidence: 0.75, doctors: ['Gastroenterologist', 'General Physician'] },
+                    { name: 'Food Poisoning', confidence: 0.70, doctors: ['Gastroenterologist', 'General Physician'] },
+                    { name: 'Irritable Bowel Syndrome', confidence: 0.55, doctors: ['Gastroenterologist', 'General Physician'] }
+                ]
+            },
+            'vomiting': {
+                conditions: [
+                    { name: 'Gastroenteritis', confidence: 0.75, doctors: ['Gastroenterologist', 'General Physician'] },
+                    { name: 'Migraine', confidence: 0.60, doctors: ['Neurologist', 'General Physician'] },
+                    { name: 'Food Poisoning', confidence: 0.70, doctors: ['Gastroenterologist', 'General Physician'] }
+                ]
+            },
+            'skin rash': {
+                conditions: [
+                    { name: 'Dermatitis', confidence: 0.70, doctors: ['Dermatologist', 'General Physician'] },
+                    { name: 'Allergic Reaction', confidence: 0.65, doctors: ['Allergist', 'Dermatologist'] },
+                    { name: 'Chickenpox', confidence: 0.60, doctors: ['General Physician', 'Infectious Disease'] },
+                    { name: 'Fungal Infection', confidence: 0.55, doctors: ['Dermatologist', 'General Physician'] }
+                ]
+            },
+            'back pain': {
+                conditions: [
+                    { name: 'Muscle Strain', confidence: 0.75, doctors: ['Orthopedic Surgeon', 'General Physician'] },
+                    { name: 'Disc Herniation', confidence: 0.65, doctors: ['Orthopedic Surgeon', 'Neurologist'] },
+                    { name: 'Arthritis', confidence: 0.55, doctors: ['Rheumatologist', 'Orthopedic Surgeon'] }
+                ]
+            }
+        };
+
+        // Doctors database
+        const doctorsDatabase = {
+            'General Physician': {
+                name: 'Dr. Rajesh Kumar',
+                experience: '15+ years',
+                department: 'General Medicine',
+                availability: 'Mon-Fri, 9 AM - 5 PM'
+            },
+            'Cardiologist': {
+                name: 'Dr. Priya Sharma',
+                experience: '12+ years',
+                department: 'Cardiology',
+                availability: 'Tue, Thu, Sat, 10 AM - 4 PM'
+            },
+            'Pulmonologist': {
+                name: 'Dr. Amit Singh',
+                experience: '10+ years',
+                department: 'Pulmonology',
+                availability: 'Mon, Wed, Fri, 2 PM - 6 PM'
+            },
+            'Neurologist': {
+                name: 'Dr. Deepika Patel',
+                experience: '14+ years',
+                department: 'Neurology',
+                availability: 'Mon-Thu, 11 AM - 3 PM'
+            },
+            'Gastroenterologist': {
+                name: 'Dr. Arun Verma',
+                experience: '11+ years',
+                department: 'Gastroenterology',
+                availability: 'Tue, Thu, Sat, 3 PM - 7 PM'
+            },
+            'Orthopedic Surgeon': {
+                name: 'Dr. Suresh Nair',
+                experience: '13+ years',
+                department: 'Orthopedics',
+                availability: 'Mon, Wed, Fri, 9 AM - 1 PM'
+            },
+            'Dermatologist': {
+                name: 'Dr. Neha Gupta',
+                experience: '9+ years',
+                department: 'Dermatology',
+                availability: 'Mon, Thu, Sat, 4 PM - 8 PM'
+            },
+            'Infectious Disease Specialist': {
+                name: 'Dr. Vikram Singh',
+                experience: '16+ years',
+                department: 'Infectious Disease',
+                availability: 'Tue, Wed, Fri, 1 PM - 5 PM'
+            },
+            'Allergist': {
+                name: 'Dr. Sneha Roy',
+                experience: '8+ years',
+                department: 'Allergy & Immunology',
+                availability: 'Mon, Wed, Fri, 10 AM - 2 PM'
+            },
+            'Rheumatologist': {
+                name: 'Dr. Rohan Desai',
+                experience: '12+ years',
+                department: 'Rheumatology',
+                availability: 'Tue, Thu, 2 PM - 6 PM'
+            },
+            'Psychiatrist': {
+                name: 'Dr. Anjali Chopra',
+                experience: '11+ years',
+                department: 'Psychiatry',
+                availability: 'Mon, Wed, Fri, 3 PM - 7 PM'
+            },
+            'ENT Specialist': {
+                name: 'Dr. Harish Malhotra',
+                experience: '10+ years',
+                department: 'ENT',
+                availability: 'Tue, Thu, Sat, 11 AM - 3 PM'
+            }
+        };
+
+        let lastAnalysisResults = null;
+
+        function analyzeSymptoms() {
+            const symptomInput = document.getElementById('symptomInput').value.toLowerCase().trim();
+            
+            if (!symptomInput) {
+                showToast('Please enter your symptoms first', 'danger');
+                return;
+            }
+
+            // Convert symptoms to lowercase for matching
+            const symptoms = symptomInput.split(/[,\.\s]+/).filter(s => s.length > 2);
+            
+            // Find matching conditions
+            const matchedConditions = {};
+            
+            symptoms.forEach(symptom => {
+                Object.keys(symptomDatabase).forEach(key => {
+                    if (key.includes(symptom) || symptom.includes(key)) {
+                        const conditions = symptomDatabase[key].conditions;
+                        conditions.forEach(condition => {
+                            if (!matchedConditions[condition.name]) {
+                                matchedConditions[condition.name] = {
+                                    ...condition,
+                                    matchCount: 1
+                                };
+                            } else {
+                                matchedConditions[condition.name].matchCount += 1;
+                                matchedConditions[condition.name].confidence = Math.min(1, 
+                                    matchedConditions[condition.name].confidence + 0.1);
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Sort by confidence and match count
+            const sortedConditions = Object.values(matchedConditions)
+                .sort((a, b) => (b.confidence * b.matchCount) - (a.confidence * a.matchCount))
+                .slice(0, 5);
+
+            if (sortedConditions.length === 0) {
+                // Default to general recommendation
+                sortedConditions.push({
+                    name: 'General Health Consultation',
+                    confidence: 0.6,
+                    doctors: ['General Physician'],
+                    matchCount: 1
+                });
+            }
+
+            // Get recommended doctor from the top condition
+            const topCondition = sortedConditions[0];
+            const recommendedDoctorSpecialty = topCondition.doctors[0];
+            const recommendedDoctor = doctorsDatabase[recommendedDoctorSpecialty];
+
+            // Store results for booking
+            lastAnalysisResults = {
+                conditions: sortedConditions,
+                doctor: recommendedDoctor,
+                specialty: recommendedDoctorSpecialty
+            };
+
+            // Display results
+            displayAnalysisResults(sortedConditions, recommendedDoctor, recommendedDoctorSpecialty);
+        }
+
+        function displayAnalysisResults(conditions, doctor, specialty) {
+            const resultsContainer = document.getElementById('aiResultsContainer');
+            const conditionsList = document.getElementById('conditionsList');
+            const recommendedDoctorDiv = document.getElementById('recommendedDoctor');
+
+            // Display conditions
+            conditionsList.innerHTML = conditions.map((condition, index) => `
+                <div class="condition-item">
+                    <div class="condition-title">${index + 1}. ${condition.name}</div>
+                    <div class="condition-confidence">
+                        <span>Probability: ${Math.round(condition.confidence * 100)}%</span>
+                    </div>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: ${condition.confidence * 100}%;"></div>
+                    </div>
+                    ${condition.urgent ? '<p style="color: var(--danger); margin-top: 0.5rem; font-weight: 600;">⚠️ URGENT - Seek immediate medical attention</p>' : ''}
+                </div>
+            `).join('');
+
+            // Display recommended doctor
+            recommendedDoctorDiv.innerHTML = `
+                <div class="doctor-card">
+                    <div class="doctor-name">🩺 ${doctor.name}</div>
+                    <div class="doctor-specialty"><strong>Specialization:</strong> ${doctor.department}</div>
+                    <div class="doctor-specialty"><strong>Experience:</strong> ${doctor.experience}</div>
+                    <div class="doctor-specialty"><strong>Available:</strong> ${doctor.availability}</div>
+                </div>
+            `;
+
+            resultsContainer.style.display = 'block';
+            showToast('Symptom analysis complete!', 'success');
+        }
+
+        function bookAppointmentFromAI() {
+            if (!lastAnalysisResults) {
+                showToast('Please analyze symptoms first', 'danger');
+                return;
+            }
+
+            const doctor = lastAnalysisResults.doctor;
+            const appointmentDate = new Date();
+            appointmentDate.setDate(appointmentDate.getDate() + 2);
+            
+            showToast(`Appointment scheduled with ${doctor.name} on ${appointmentDate.toLocaleDateString()}`, 'success');
+            openBookAppointmentModal('patient');
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', initDashboard);
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            const appointmentModal = document.getElementById('appointmentModal');
+            const consultationModal = document.getElementById('consultationModal');
+            
+            if (e.target === appointmentModal) {
+                closeModal('appointmentModal');
+            }
+            if (e.target === consultationModal) {
+                closeModal('consultationModal');
+            }
+        });
+    </script>
+</body>
+</html>

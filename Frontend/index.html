@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>
+                <span>MediCare</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#login" class="nav-link">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home/Landing Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Advanced Healthcare Management</h1>
+            <p class="hero-subtitle">Streamlined patient care, efficient operations, and better outcomes</p>
+            <button class="btn btn--primary btn--lg" id="book-appointment-hero">Book Appointment</button>
+        </div>
+    </section>
+
+    <!-- Hospital Information Section -->
+    <section id="about" class="hospital-info-section">
+        <div class="container">
+            <div class="hospital-header">
+                <h2>Welcome to Xcelerate Medical Center</h2>
+                <p>Leading Healthcare Excellence Since 2015</p>
+            </div>
+
+            <!-- Contact & Emergency -->
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📍</div>
+                    <h3>Location</h3>
+                    <p>123 Medical Plaza, Healthcare District<br>New York, NY 10001</p>
+                </div>
+                <div class="info-card emergency">
+                    <div class="info-icon">🚑</div>
+                    <h3>Emergency Helpline</h3>
+                    <p style="font-size: 1.5rem; font-weight: bold; color: #ff4444;">24/7: +1 (555) 911-2023</p>
+                    <p>Always available for emergencies</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📞</div>
+                    <h3>Main Reception</h3>
+                    <p>+1 (555) 123-4567<br>info@xceleratemedical.com</p>
+                </div>
+            </div>
+
+            <!-- Top Doctors Section -->
+            <div class="doctors-section">
+                <h3>Our Top Doctors</h3>
+                <div class="doctors-grid">
+                    <div class="doctor-card">
+                        <div class="doctor-avatar">👨‍⚕️</div>
+                        <h4>Dr. James Mitchell</h4>
+                        <p class="specialty">Cardiology Specialist</p>
+                        <p class="experience">20 Years Experience</p>
+                        <p class="bio">Expert in cardiac surgeries and interventional cardiology. Treated over 5,000 patients successfully.</p>
+                        <div class="top-cases">
+                            <strong>Top Cases:</strong>
+                            <ul>
+                                <li>Open Heart Surgery - 500+ cases</li>
+                                <li>Coronary Angioplasty - 800+ cases</li>
+                                <li>Heart Transplant - 50+ cases</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="doctor-card">
+                        <div class="doctor-avatar">👩‍⚕️</div>
+                        <h4>Dr. Sarah Anderson</h4>
+                        <p class="specialty">Neurology Specialist</p>
+                        <p class="experience">18 Years Experience</p>
+                        <p class="bio">Renowned neurologist with expertise in brain tumor surgery and neurological disorders.</p>
+                        <div class="top-cases">
+                            <strong>Top Cases:</strong>
+                            <ul>
+                                <li>Brain Tumor Surgery - 600+ cases</li>
+                                <li>Spine Surgery - 400+ cases</li>
+                                <li>Stroke Management - 1000+ cases</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="doctor-card">
+                        <div class="doctor-avatar">👨‍⚕️</div>
+                        <h4>Dr. Robert Chen</h4>
+                        <p class="specialty">Orthopedic Surgeon</p>
+                        <p class="experience">16 Years Experience</p>
+                        <p class="bio">Specialist in joint replacement and sports medicine. Pioneer in minimally invasive orthopedic procedures.</p>
+                        <div class="top-cases">
+                            <strong>Top Cases:</strong>
+                            <ul>
+                                <li>Knee Replacement - 2000+ cases</li>
+                                <li>Hip Replacement - 1500+ cases</li>
+                                <li>Arthroscopic Surgery - 3000+ cases</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="doctor-card">
+                        <div class="doctor-avatar">👩‍⚕️</div>
+                        <h4>Dr. Emily Watson</h4>
+                        <p class="specialty">Oncology Specialist</p>
+                        <p class="experience">17 Years Experience</p>
+                        <p class="bio">Leading cancer researcher and treatment specialist with advanced knowledge of immunotherapy.</p>
+                        <div class="top-cases">
+                            <strong>Top Cases:</strong>
+                            <ul>
+                                <li>Cancer Surgery - 1200+ cases</li>
+                                <li>Chemotherapy Management - 2500+ cases</li>
+                                <li>Immunotherapy - 800+ cases</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <h2>Our Top Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🚨</div>
+                    <h3>Emergency Care</h3>
+                    <p>24/7 emergency services with rapid response team</p>
+                    <p class="service-stat">✓ 95% Success Rate | 50,000+ Cases/Year</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">❤️</div>
+                    <h3>Cardiology</h3>
+                    <p>Advanced cardiac surgery and treatment</p>
+                    <p class="service-stat">✓ 98.5% Success Rate | 2,500+ Surgeries</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🧠</div>
+                    <h3>Neurology</h3>
+                    <p>Brain and nervous system treatment</p>
+                    <p class="service-stat">✓ 94% Success Rate | 1,800+ Cases</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👶</div>
+                    <h3>Pediatrics</h3>
+                    <p>Specialized child healthcare services</p>
+                    <p class="service-stat">✓ 96% Success Rate | 5,000+ Patients</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🦴</div>
+                    <h3>Orthopedics</h3>
+                    <p>Bone and joint treatment</p>
+                    <p class="service-stat">✓ 97% Success Rate | 3,200+ Surgeries</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3>Patient Portal</h3>
+                    <p>Online access to medical records</p>
+                    <p class="service-stat">✓ 10,000+ Users | 99.9% Uptime</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Selection -->
+    <section id="login" class="login-section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 32px;">Select Your Role</h2>
+            <div class="role-grid">
+                <div class="role-card" data-role="doctor">
+                    <div class="role-icon">👨‍⚕️</div>
+                    <h3>Doctor</h3>
+                    <p>Access patient records and consultations</p>
+                </div>
+                <div class="role-card" data-role="nurse">
+                    <div class="role-icon">👩‍⚕️</div>
+                    <h3>Nurse</h3>
+                    <p>Manage patient care and tasks</p>
+                </div>
+                <div class="role-card" data-role="patient">
+                    <div class="role-icon">🧑‍🦱</div>
+                    <h3>Patient</h3>
+                    <p>View records and book appointments</p>
+                </div>
+                <div class="role-card" data-role="staff">
+                    <div class="role-icon">👔</div>
+                    <h3>Staff</h3>
+                    <p>Handle operations and logistics</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Forms -->
+    <section id="doctor-login" class="login-form-section" style="display: none;">
+        <div class="login-form-container">
+            <button class="back-btn" onclick="backToRoleSelection()">← Back</button>
+            <h2>Doctor Portal Login</h2>
+            <div class="demo-credentials-card">
+                <div class="demo-header">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <h4>Demo Credentials</h4>
+                </div>
+                <div class="demo-content">
+                    <div class="credential-item">
+                        <label>Email:</label>
+                        <span>doctor@quickhealth.com</span>
+                    </div>
+                    <div class="credential-item">
+                        <label>Password:</label>
+                        <span>doctor123</span>
+                    </div>
+                </div>
+                <button class="btn btn--outline btn--sm" onclick="useDemoCredentials('doctor')">Use Demo Credentials</button>
+            </div>
+            <form class="login-form" onsubmit="handleLogin(event, 'doctor')">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" id="doctor-email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="doctor-password" required>
+                </div>
+                <button type="submit" class="btn btn--primary" style="width: 100%;">Login</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="nurse-login" class="login-form-section" style="display: none;">
+        <div class="login-form-container">
+            <button class="back-btn" onclick="backToRoleSelection()">← Back</button>
+            <h2>Nurse Portal Login</h2>
+            <div class="demo-credentials-card">
+                <div class="demo-header">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <h4>Demo Credentials</h4>
+                </div>
+                <div class="demo-content">
+                    <div class="credential-item">
+                        <label>Email:</label>
+                        <span>nurse@quickhealth.com</span>
+                    </div>
+                    <div class="credential-item">
+                        <label>Password:</label>
+                        <span>nurse123</span>
+                    </div>
+                </div>
+                <button class="btn btn--outline btn--sm" onclick="useDemoCredentials('nurse')">Use Demo Credentials</button>
+            </div>
+            <form class="login-form" onsubmit="handleLogin(event, 'nurse')">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" id="nurse-email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="nurse-password" required>
+                </div>
+                <button type="submit" class="btn btn--primary" style="width: 100%;">Login</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="patient-login" class="login-form-section" style="display: none;">
+        <div class="login-form-container">
+            <button class="back-btn" onclick="backToRoleSelection()">← Back</button>
+            <h2>Patient Portal Login</h2>
+            <div class="demo-credentials-card">
+                <div class="demo-header">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <h4>Demo Credentials</h4>
+                </div>
+                <div class="demo-content">
+                    <div class="credential-item">
+                        <label>Email:</label>
+                        <span>patient@quickhealth.com</span>
+                    </div>
+                    <div class="credential-item">
+                        <label>Password:</label>
+                        <span>patient123</span>
+                    </div>
+                </div>
+                <button class="btn btn--outline btn--sm" onclick="useDemoCredentials('patient')">Use Demo Credentials</button>
+            </div>
+            <form class="login-form" onsubmit="handleLogin(event, 'patient')">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" id="patient-email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="patient-password" required>
+                </div>
+                <button type="submit" class="btn btn--primary" style="width: 100%;">Login</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="staff-login" class="login-form-section" style="display: none;">
+        <div class="login-form-container">
+            <button class="back-btn" onclick="backToRoleSelection()">← Back</button>
+            <h2>Staff Portal Login</h2>
+            <div class="demo-credentials-card">
+                <div class="demo-header">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <h4>Demo Credentials</h4>
+                </div>
+                <div class="demo-content">
+                    <div class="credential-item">
+                        <label>Email:</label>
+                        <span>staff@quickhealth.com</span>
+                    </div>
+                    <div class="credential-item">
+                        <label>Password:</label>
+                        <span>staff123</span>
+                    </div>
+                </div>
+                <button class="btn btn--outline btn--sm" onclick="useDemoCredentials('staff')">Use Demo Credentials</button>
+            </div>
+            <form class="login-form" onsubmit="handleLogin(event, 'staff')">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" id="staff-email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="staff-password" required>
+                </div>
+                <button type="submit" class="btn btn--primary" style="width: 100%;">Login</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Doctor Portal -->
+    <section id="doctor-portal" class="portal-section" style="display: none;">
+        <div class="portal-header">
+            <h2>Doctor Portal</h2>
+            <button class="btn btn--outline" onclick="logout()">Logout</button>
+        </div>
+        
+        <div class="portal-tabs">
+            <button class="tab-btn active" data-tab="doctor-patients">Patients</button>
+            <button class="tab-btn" data-tab="doctor-appointments">Appointments</button>
+            <button class="tab-btn" data-tab="doctor-analytics">Analytics</button>
+        </div>
+
+        <div id="doctor-patients" class="tab-content active">
+            <div class="patients-grid" id="doctor-patients-grid"></div>
+        </div>
+
+        <div id="doctor-appointments" class="tab-content">
+            <div class="appointments-list" id="doctor-appointments-list"></div>
+        </div>
+
+        <div id="doctor-analytics" class="tab-content">
+            <div class="chart-container">
+                <canvas id="doctor-chart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nurse Portal -->
+    <section id="nurse-portal" class="portal-section" style="display: none;">
+        <div class="portal-header">
+            <h2>Nurse Portal</h2>
+            <button class="btn btn--outline" onclick="logout()">Logout</button>
+        </div>
+        
+        <div class="portal-tabs">
+            <button class="tab-btn active" data-tab="nurse-tasks">Tasks</button>
+            <button class="tab-btn" data-tab="nurse-patients">Patients</button>
+            <button class="tab-btn" data-tab="nurse-schedule">Schedule</button>
+        </div>
+
+        <div id="nurse-tasks" class="tab-content active">
+            <div class="tasks-list" id="nurse-tasks-list"></div>
+        </div>
+
+        <div id="nurse-patients" class="tab-content">
+            <div class="patients-grid" id="nurse-patients-grid"></div>
+        </div>
+
+        <div id="nurse-schedule" class="tab-content">
+            <div class="chart-container">
+                <canvas id="nurse-chart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Patient Portal -->
+    <section id="patient-portal" class="portal-section" style="display: none;">
+        <div class="portal-header">
+            <h2>Patient Portal</h2>
+            <div style="display: flex; gap: 16px; align-items: center;">
+                <div class="notification-bell" id="notification-bell">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-badge" id="notification-badge">0</span>
+                </div>
+                <button class="btn btn--outline" onclick="logout()">Logout</button>
+            </div>
+        </div>
+        
+        <div class="portal-tabs">
+            <button class="tab-btn active" data-tab="patient-dashboard">Dashboard</button>
+            <button class="tab-btn" data-tab="patient-appointments">Appointments</button>
+            <button class="tab-btn" data-tab="patient-reports">Reports</button>
+        </div>
+
+        <div id="patient-dashboard" class="tab-content active">
+            <div class="dashboard-cards">
+                <div class="stat-card">
+                    <h4>Next Appointment</h4>
+                    <p class="stat-value">Nov 23, 2025</p>
+                    <p class="stat-label">10:00 AM - Dr. Sarah Williams</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Pending Reports</h4>
+                    <p class="stat-value">2</p>
+                    <p class="stat-label">Lab results available</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Medications</h4>
+                    <p class="stat-value">3</p>
+                    <p class="stat-label">Active prescriptions</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="patient-appointments" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h3>My Appointments</h3>
+                <button class="btn btn--primary" id="book-new-appointment">Book New</button>
+            </div>
+            <div class="appointments-list" id="patient-appointments-list"></div>
+        </div>
+
+        <div id="patient-reports" class="tab-content">
+            <div class="reports-grid" id="patient-reports-grid"></div>
+        </div>
+    </section>
+
+    <!-- Staff Portal -->
+    <section id="staff-portal" class="portal-section" style="display: none;">
+        <div class="portal-header">
+            <h2>Staff Portal</h2>
+            <button class="btn btn--outline" onclick="logout()">Logout</button>
+        </div>
+        
+        <div class="portal-tabs">
+            <button class="tab-btn active" data-tab="staff-alerts">Alerts</button>
+            <button class="tab-btn" data-tab="staff-discharge">Discharge</button>
+            <button class="tab-btn" data-tab="staff-transfers">Transfers</button>
+        </div>
+
+        <div id="staff-alerts" class="tab-content active">
+            <div class="alerts-list" id="staff-alerts-list"></div>
+        </div>
+
+        <div id="staff-discharge" class="tab-content">
+            <div class="discharge-list" id="staff-discharge-list"></div>
+        </div>
+
+        <div id="staff-transfers" class="tab-content">
+            <div class="chart-container">
+                <canvas id="staff-chart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modals -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div id="modal-content" class="modal-content"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
